@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = " 管理系统";
+}
+
+<div class="main-content-inner">
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs breadcrumbs-fixed" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">主页</a>
+            </li>
+            <li class="active">控制台</li>
+        </ul><!-- /.breadcrumb -->
+        <!-- #section:basics/content.searchbox -->
+        <div class="nav-search" id="nav-search">
+            <form class="form-search">
+                <span class="input-icon">
+                    <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                    <i class="ace-icon fa fa-search nav-search-icon"></i>
+                </span>
+            </form>
+        </div><!-- /.nav-search -->
+        <!-- /section:basics/content.searchbox -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+       
+        <div class="page-header">
+            <h1>
+                控制台
+                <small>
+                    <i class="ace-icon fa fa-angle-double-right"></i>
+                    覆盖 &amp; 开始
+                </small>
+            </h1>
+        </div><!-- /.page-header -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="alert alert-block alert-success">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="ace-icon fa fa-times"></i>
+                    </button>
+
+                    <i class="ace-icon fa fa-check green"></i>
+
+                    欢迎使用
+                    <strong class="green">
+                        @ViewBag.SystemName
+                        <small>(v0.0.1)</small>
+                    </strong>,
+                    @ViewBag.CompanyName
+                </div>
+
+                <div class="row">
+                   
+                </div><!-- /.row -->
+                <!-- #section:custom/extra.hr -->
+                <div class="hr hr32 hr-dotted"></div>
+
+
+
+                <div class="hr hr32 hr-dotted"></div>
+
+                <!-- /.row -->
+                <!-- PAGE CONTENT ENDS -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div>
+
+@section scriptsplugin {
+
+    <!-- page specific plugin scripts -->
+    <!--[if lte IE 8]>
+      <script src="~/assets/js/excanvas.js"></script>
+    <![endif]-->
+    <script src="~/assets/js/jquery-ui.custom.js"></script>
+    <script src="~/assets/js/jquery.ui.touch-punch.js"></script>
+    <script src="~/assets/js/jquery.easypiechart.js"></script>
+    <script src="~/assets/js/jquery.sparkline.js"></script>
+    <script src="~/assets/js/flot/jquery.flot.js"></script>
+    <script src="~/assets/js/flot/jquery.flot.pie.js"></script>
+    <script src="~/assets/js/flot/jquery.flot.resize.js"></script>
+}

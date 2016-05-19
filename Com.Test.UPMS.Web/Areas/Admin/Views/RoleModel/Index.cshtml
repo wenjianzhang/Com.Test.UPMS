@@ -1,0 +1,232 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var sid = Request.QueryString["sid"] == null ? "1" : Request.QueryString["sid"];
+}
+
+@section stylesplugin{
+
+    <base href="/" />
+    <link rel="stylesheet" href="~/assets/css/bootstrap-duallistbox.css" />
+    <link rel="stylesheet" href="~/assets/css/bootstrap-multiselect.css" />
+    <link rel="stylesheet" href="~/assets/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/css/chosen.css" />
+    <style>
+        td > .list { content: ""; display: block; width: 7px; position: absolute; z-index: 1; left: 20px; top: 17px; border: 1px dotted; border-width: 1px 0 0; }
+        .list { width: 400px; border-spacing: 0px; }
+
+            .list td,
+            .list th { box-sizing: border-box; }
+
+            .list th { line-height: 24px; height: 40px; font-weight: bold; border: none; background: none; border-bottom: 2px solid #5B5B5B; text-align: left; width: 200px; }
+
+            .list td { line-height: 30px; }
+
+        .name { padding-left: 10px; }
+
+        .inner { display: none; }
+
+            .inner.open { display: table-row; }
+
+        .switch, .ico { display: inline-block; width: 18px; height: 18px; background-image: url("http://www.gbtags.com/gb/networks/background/d0642682-f7aa-4c64-98c6-fbd320d52706.png"); vertical-align: text-top; }
+
+        .leaf .ico { background-position: -110px -31px; }
+
+        .outer .ico { background-position: -110px 0; }
+
+        .outer.open .ico { background-position: -110px -15px; }
+
+        .outer .switch { background-position: -74px -18px; }
+
+        .leaf .switch { background-position: -56px -18px; }
+
+        .outer.open .switch { background-position: -92px -18px; }
+
+        .list .leaf:last-child .switch { background-position: -56px -36px; }
+
+        #listTable > tbody > tr:first-child { background-position: -74px 0; }
+
+        .text-indent { display: inline-block; width: 16px; }
+
+        .outer.open > td,
+        #listTable > tbody > tr > td { border-bottom: 1px solid #E6E6E6; }
+
+        tr.outer.focus,
+        tr.leaf.focus { background: #ccc; }
+    </style>
+}
+
+<div class="main-content-inner" ng-app="adminApp">
+    <!-- #section:basics/content.breadcrumbs -->
+    <div ng-controller="roleModelController">
+
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="#">控制台</a>
+                </li>
+
+                <li>
+                    <a href="#">角色权限信息</a>
+                </li>
+                <li class="active">配置</li>
+            </ul>
+            <ul class="breadcrumb pull-right">
+                @*<li><button class="btn btn-minier btn-yellow" ng-click="saveselectedcheck()">保存</button></li>*@
+            </ul>
+            <!-- /.breadcrumb -->
+        </div>
+
+        <!-- /section:basics/content.breadcrumbs -->
+        <div class="page-content  no-margin no-padding">
+            <div class="row  no-margin no-padding">
+
+                <!-- PAGE CONTENT BEGINS -->
+                <div id="sidebar1" class="sidebar sidebar-fixed responsive">
+                    <script type="text/javascript">
+                        try { ace.settings.check('sidebar1', 'fixed') } catch (e) { }
+                    </script>
+                    <ul class="nav nav-list">
+
+                        <li class="active">
+                            <!--第一级菜单-->
+                            <a href="#" class="dropdown-toggle active">
+                                <i class="menu-icon fa fa-windows"></i>
+                                <span class="menu-text">
+                                    系统名称
+                                </span>
+                            </a>
+
+                            <b class="arrow"></b>
+
+                            <ul class="submenu" ng-init="loadRole()">
+                                <!--第二级菜单-->
+                                <li ng-class="{active: rid == item.RoleId}" ng-model="item.Checked" ng-repeat="item in dataRoleList" ng-click="setRole(item.RoleId)">
+                                    <!--第二级菜单@Request.Url.AbsolutePath?sid=@sid&rid={{item.RoleId}}-->
+                                    <a href="">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        <i class="fa fa-users"></i>
+                                        {{item.RoleName}}
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul><!-- /.nav-list -->
+                    <!-- #section:basics/sidebar.layout.minimize -->
+                    @*<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+                            <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+                        </div>*@
+
+                    <!-- /section:basics/sidebar.layout.minimize -->
+                    <script type="text/javascript">
+                        try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+                    </script>
+                </div>
+
+                <div class="main-content responsive">
+                    <table id="simple-table" class="table table-striped table-bordered table-hover main-content-inner" ng-init="loadModelInfo()">
+                        <thead>
+                            <tr>
+
+                                @*<th class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace checkboxall" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </th>*@
+                                <th>菜单名称</th>
+                                <th>指定动作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr ng-repeat="item in dataModelList">
+
+                                @*<td class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace checkboxitem" value="{{item.ModelId}}" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </td>*@
+
+                                <td class="leaf">
+                                    <i class="ace-icon fa fa-caret-right" ng-if="item.PModelId==0"></i>
+                                    <span class="switch" ng-if="item.PModelId!=0"></span>{{item.ModelName}}
+                                </td>
+
+                                <td>
+                                    <div class="hidden-sm hidden-xs action-Systems" ng-if="item.PModelId==1">
+
+                                        <label class="pos-rel btn btn-minier {{itemc.ButtonClass}}" title="{{itemc.ButtonName}}" ng-repeat="itemc in dataModelButtonList | filter:{ModelId:item.ModelId}" ng-if="itemc.ButtonId>0">
+                                            <input type="checkbox" class="ace checkboxitem" name="{{itemc.ModelId}}{{itemc.ButtonName}}" ng-model="itemc.Checked" ng-change="updateMB(item.SystemId,itemc.ModelId,itemc.ButtonId,itemc.Checked)" />
+
+                                            <span class="lbl">&nbsp;<i class="ace-icon {{itemc.ButtonIcon}} bigger-130"></i>{{itemc.ButtonName}}</span>
+                                        </label>&nbsp;
+                                    </div>
+
+                                    <div class="hidden-md hidden-lg">
+                                        <div class="inline pos-rel">
+                                            <System class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                            </System>
+
+                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                <li>
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                                        <span class="blue">
+                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit" ng-click="showForm(item.ModelId)">
+                                                        <span class="green">
+                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete" ng-click="delete (item.ModelId)">
+                                                        <span class="red">
+                                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {{dataModelButtonListCheck}}
+                </div>
+                <!-- /.span -->
+            </div><!-- /.row -->
+        </div><!-- /.page-content -->
+    </div>
+</div>
+
+@section scriptsplugin {
+    <script src="~/assets/js/chosen.jquery.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script>
+        var baseUrl = '@Url.Content("~/")';
+    </script>
+
+    <script src="~/Scripts/appnoui.js"></script>
+    <script src="~/Scripts/common.js"></script>
+    <script src="~/Scripts/controllers/rolemodel.js"></script>
+}
+@section scripts {
+
+}

@@ -1,0 +1,258 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var pagesize = Request.QueryString["pagesize"] == null ? "10" : Request.QueryString["pagesize"];
+}
+
+@section stylesplugin{
+
+    <link rel="stylesheet" href="~/assets/css/bootstrap-duallistbox.css" />
+    <link rel="stylesheet" href="~/assets/css/bootstrap-multiselect.css" />
+    <link rel="stylesheet" href="~/assets/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/css/chosen.css" />
+    <link href="~/Content/pagination.css" rel="stylesheet" />
+}
+
+<div class="main-content-inner" ng-app="adminApp">
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">控制台</a>
+            </li>
+
+            <li>
+                <a href="#">系统信息</a>
+            </li>
+            <li class="active">列表</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content no-margin-bottom no-padding-bottom">
+        <div class="row  no-margin-bottom" ng-controller="systemInfoController">
+            <div class="col-xs-12 no-margin-bottom">
+                <div class="row">
+                    <form class="form-inline" System="form">
+                        <div class="pull-left col-xs-8 clearfix ">
+                            <input type="text" class="col-xs-2" placeholder="系统名称" name="keyname" value="" />
+
+                            <System type="System" class="btn btn-default btn-sm" ng-click="select();">
+                                <i class="ace-icon fa fa-search bigger-110"></i>查询
+                            </System>
+                        </div>
+                        <div class="col-xs-4 clearfix ">
+
+                            <System class="btn btn-sm btn-primary pull-right" type="System" ng-click="reload();"><i class="ace-icon glyphicon glyphicon-refresh bigger-110"></i>刷新</System>
+                            <span class="pull-right">&nbsp;</span>
+                            @*<System class="btn btn-sm btn-danger pull-right" type="System" ng-click="delAll();"><i class="ace-icon fa fa-trash-o bigger-110"></i>删除</System>
+                                <span class="pull-right">&nbsp;</span>*@
+                            <System class="btn btn-sm btn-success pull-right col-sm-offset-1" type="System" ng-click="showForm(0);"><i class="ace-icon fa fa-plus bigger-110"></i>新增</System>
+                        </div>
+                    </form>
+                </div>
+                <div class="space-6"></div>
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div>
+                        </div>
+                        <table id="simple-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace checkboxall" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </th>
+                                    <th>系统标识</th>
+                                    <th>系统名称</th>
+                                    <th>系统代码</th>
+                                    <th>系统Icon</th>
+                                    <th>排序</th>
+                                    <th>创建时间</th>
+                                    <th>最后修改时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="item in dataSystemList">
+                                    <td class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace checkboxitem" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </td>
+                                    <td>{{item.SystemId}}</td>
+                                    <td>{{item.SystemName}}</td>
+                                    <td>{{item.SystemCode}}</td>
+                                    <td>{{item.SystemIcon}}</td>
+                                    <td>{{item.Sort}}</td>
+                                    <td>{{item.CreateDate | jsonDate:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    <td>{{item.UpdateDate | jsonDate:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    <td>
+                                        <div class="hidden-sm hidden-xs action-Systems">
+                                            <a class="blue" href="#">
+                                                <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                            </a>
+                                            <a class="grey" href="/Admin/ModelInfo/Index?sid={{item.SystemId}}">
+                                                <i class="ace-icon glyphicon glyphicon-cog bigger-130"></i>
+                                            </a>
+                                            <a class="purple" href="/Admin/RoleModel/Index?sid={{item.SystemId}}">
+                                                <i class="ace-icon fa fa-users bigger-130"></i>
+                                            </a>
+                                            <a class="green" href="#" ng-click="showForm(item.SystemId)">
+                                                <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                            </a>
+
+                                            <a class="red" href="#" ng-click="delete (item.SystemId)">
+                                                <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="hidden-md hidden-lg">
+                                            <div class="inline pos-rel">
+                                                <System class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                    <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                </System>
+
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                    <li>
+                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                                            <span class="blue">
+                                                                <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/ModelInfo/Index?sid={{item.SystemId}}" class="tooltip-info" data-rel="tooltip" title="View">
+                                                            <span class="blue">
+                                                                <i class="ace-icon glyphicon glyphicon-cog bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit" ng-click="showForm(item.SystemId)">
+                                                            <span class="green">
+                                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete" ng-click="delete (item.SystemId)">
+                                                            <span class="red">
+                                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- /.span -->
+                </div><!-- /.row -->
+                @*<div class="hr hr-18 dotted hr-double"></div>*@
+                <div class="row no-padding-bottom no-padding-top">
+                    <div class="col-xs-12 no-margin-bottom no-margin-top">
+                        <tm-pagination conf="paginationConf"></tm-pagination>
+                    </div>
+                </div>
+
+                <div id="modal-map" class="modal fade" tabindex="-1">
+                    <div class="modal-dialog" style="width:50%;">
+                        <div class="modal-content">
+                            <div class="modal-header no-padding">
+                                <div class="table-header">
+                                    <System type="System" class="close" data-dismiss="modal" aria-hidden="true">
+                                        <span class="white">&times;</span>
+                                    </System>
+                                    <p class="model-title">新增</p>
+                                </div>
+                            </div>
+
+                            <div class="modal-body">
+                                <form id="updateForm" class="form-horizontal" System="form" style="display:none">
+                                    <input type="hidden" name="Id" id="ID" ng-model="systemInfo.SystemId" />
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="SystemName">名称</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="SystemName" placeholder="名称" name="SystemName" class="col-xs-10 col-sm-8 checkColor" ng-model="systemInfo.SystemName" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="SystemCode"> 代码 </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="SystemCode" placeholder="代码" name="SystemCode" class="col-xs-10 col-sm-8 " ng-model="systemInfo.SystemCode" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="SystemIcon"> Icon </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="SystemIcon" placeholder="Icon" name="SystemIcon" class="col-xs-10 col-sm-8 " ng-model="systemInfo.SystemIcon" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="Sor"> 排序 </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="Sor" placeholder="排序" name="Sor" class="col-xs-10 col-sm-8 " ng-model="systemInfo.Sort" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="SystemRole"> 包含角色 </label>
+                                        <div class="col-sm-9">
+                                            <select class="multiselect col-xs-10 col-sm-8" id="SystemRole" name="SystemRole" data-placeholder="包含角色" ng-model="systemInfo.SystemRoles" ng-init="getroleinfo()" ng-options="itemSelect.RoleId as itemSelect.RoleName for itemSelect in dataRoleSelectList" ng-multiple="true" multiple></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <System class="btn btn-info " id="ubtnSubmit" type="System" ng-click="updateClick()"> <i class="ace-icon fa fa-check bigger-110"></i>  提交 </System>
+                                            &nbsp; &nbsp; &nbsp;
+                                            <System class="btn " id="ubtnReset" type="System" ng-click="cancelClick()"> <i class="ace-icon fa fa-undo bigger-110"></i>  取消 </System>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div>
+
+@section scriptsplugin {
+    <script src="~/assets/js/chosen.jquery.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+
+    @*<script src="~/assets/js/jquery.bootstrap-duallistbox.js"></script>
+        <script src="~/assets/js/jquery.raty.js"></script>
+        <script src="~/assets/js/bootstrap-multiselect.js"></script>
+        <script src="~/assets/js/select2.js"></script>*@
+
+    <script src="~/Scripts/tm.pagination.js"></script>
+    <script>
+        var baseUrl = '@Url.Content("~/")';
+    </script>
+
+    <script src="~/Scripts/app.js"></script>
+    <script src="~/Scripts/common.js"></script>
+    <script src="~/Scripts/controllers/systemInfo.js"></script>
+}
+@section scripts {
+
+}

@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Com.Test.UPMS.Web", "Com.Test.UPMS.Web\Com.Test.UPMS.Web.csproj", "{E8EAEBB8-C0DA-429F-BC7A-F52227DC1400}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Com.Test.UPMS.Web.Tests", "Com.Test.UPMS.Web.Tests\Com.Test.UPMS.Web.Tests.csproj", "{31939346-97F4-47CE-AE82-B45A8420695D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8EAEBB8-C0DA-429F-BC7A-F52227DC1400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8EAEBB8-C0DA-429F-BC7A-F52227DC1400}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8EAEBB8-C0DA-429F-BC7A-F52227DC1400}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8EAEBB8-C0DA-429F-BC7A-F52227DC1400}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31939346-97F4-47CE-AE82-B45A8420695D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31939346-97F4-47CE-AE82-B45A8420695D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31939346-97F4-47CE-AE82-B45A8420695D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31939346-97F4-47CE-AE82-B45A8420695D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://zwj.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Com.Test.UPMS.Web\\Com.Test.UPMS.Web.csproj
+		SccProjectName1 = Com.Test.UPMS.Web
+		SccLocalPath1 = Com.Test.UPMS.Web
+		SccProjectUniqueName2 = Com.Test.UPMS.Web.Tests\\Com.Test.UPMS.Web.Tests.csproj
+		SccProjectName2 = Com.Test.UPMS.Web.Tests
+		SccLocalPath2 = Com.Test.UPMS.Web.Tests
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,230 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var pagesize = Request.QueryString["pagesize"] == null ? "10" : Request.QueryString["pagesize"];
+}
+
+@section stylesplugin{
+    <link rel="stylesheet" href="~/assets/css/chosen.css" />
+    <link href="~/Content/pagination.css" rel="stylesheet" />
+}
+
+<div class="main-content-inner" ng-app="adminApp">
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">控制台</a>
+            </li>
+
+            <li>
+                <a href="#">按钮信息</a>
+            </li>
+            <li class="active">列表</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content no-margin-bottom no-padding-bottom">
+        <div class="row  no-margin-bottom" ng-controller="buttonInfoController">
+            <div class="col-xs-12 no-margin-bottom">
+                <div class="row">
+                    <form class="form-inline" role="form">
+                        <div class="pull-left col-xs-8 clearfix ">
+                            <input type="text" class="col-xs-2" placeholder="按钮名称" name="keyname" value="" />
+
+                            <button type="button" class="btn btn-default btn-sm" ng-click="select();">
+                                <i class="ace-icon fa fa-search bigger-110"></i>查询
+                            </button>
+                        </div>
+                        <div class="col-xs-4 clearfix ">
+
+                            <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="reload();"><i class="ace-icon glyphicon glyphicon-refresh bigger-110"></i>刷新</button>
+                            <span class="pull-right">&nbsp;</span>
+                            @*<button class="btn btn-sm btn-danger pull-right" type="button" ng-click="delAll();"><i class="ace-icon fa fa-trash-o bigger-110"></i>删除</button>
+                                <span class="pull-right">&nbsp;</span>*@
+                            <button class="btn btn-sm btn-success pull-right col-sm-offset-1" type="button" ng-click="showForm(0);"><i class="ace-icon fa fa-plus bigger-110"></i>新增</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="space-6"></div>
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div>
+                        </div>
+                        <table id="simple-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace checkboxall" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </th>
+                                    <th>按钮标识</th>
+                                    <th>按钮名称</th>
+                                    <th>按钮代码</th>
+                                    <th>按钮Icon</th>
+                                    <th>排序</th>
+                                    <th>创建时间</th>
+                                    <th>最后修改时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="item in dataButtonList">
+                                    <td class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace checkboxitem" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </td>
+                                    <td>{{item.ButtonId}}</td>
+                                    <td>{{item.ButtonName}}</td>
+                                    <td>{{item.ButtonCode}}</td>
+                                    <td>{{item.ButtonIcon}}</td>
+                                    <td>{{item.Sort}}</td>
+                                    <td>{{item.CreateDate | jsonDate:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    <td>{{item.UpdateDate | jsonDate:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    <td>
+                                        <div class="hidden-sm hidden-xs action-buttons">
+                                            <a class="blue" href="#">
+                                                <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                            </a>
+
+                                            <a class="green" href="#" ng-click="showForm(item.ButtonId)">
+                                                <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                            </a>
+
+                                            <a class="red" href="#" ng-click="delete (item.ButtonId)">
+                                                <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="hidden-md hidden-lg">
+                                            <div class="inline pos-rel">
+                                                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                    <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                    <li>
+                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                                            <span class="blue">
+                                                                <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit" ng-click="showForm(item.ButtonId)">
+                                                            <span class="green">
+                                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete" ng-click="delete (item.ButtonId)">
+                                                            <span class="red">
+                                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- /.span -->
+                </div><!-- /.row -->
+                @*<div class="hr hr-18 dotted hr-double"></div>*@
+                <div class="row no-padding-bottom no-padding-top">
+                    <div class="col-xs-12 no-margin-bottom no-margin-top">
+                        <tm-pagination conf="paginationConf"></tm-pagination>
+                    </div>
+                </div>
+
+                <div id="modal-map" class="modal fade" tabindex="-1">
+                    <div class="modal-dialog" style="width:50%;">
+                        <div class="modal-content">
+                            <div class="modal-header no-padding">
+                                <div class="table-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        <span class="white">&times;</span>
+                                    </button>
+                                    <p class="model-title">新增</p>
+                                </div>
+                            </div>
+
+                            <div class="modal-body">
+                                <form id="updateForm" class="form-horizontal" role="form" style="display:none">
+                                    <input type="hidden" name="Id" id="ID" ng-model="buttonInfo.ButtonId" />
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="ButtonName">名称</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="ButtonName" placeholder="名称" name="ButtonName" class="col-xs-10 col-sm-8 checkColor" ng-model="buttonInfo.ButtonName" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="ButtonCode"> 代码 </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="ButtonCode" placeholder="代码" name="ButtonCode" class="col-xs-10 col-sm-8 " ng-model="buttonInfo.ButtonCode" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="ButtonIcon"> Icon </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="ButtonIcon" placeholder="Icon" name="ButtonIcon" class="col-xs-10 col-sm-8 " ng-model="buttonInfo.ButtonIcon" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right" for="Sor"> 排序 </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="Sor" placeholder="排序" name="Sor" class="col-xs-10 col-sm-8 " ng-model="buttonInfo.Sort" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <button class="btn btn-info " id="ubtnSubmit" type="button" ng-click="updateClick()"> <i class="ace-icon fa fa-check bigger-110"></i>  提交 </button>
+                                            &nbsp; &nbsp; &nbsp;
+                                            <button class="btn " id="ubtnReset" type="button" ng-click="cancelClick()"> <i class="ace-icon fa fa-undo bigger-110"></i>  取消 </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div>
+
+@section scriptsplugin {
+    <script src="~/assets/js/chosen.jquery.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+
+    <script src="~/Scripts/tm.pagination.js"></script>
+    <script>
+        var baseUrl = '@Url.Content("~/")';
+    </script>
+
+    <script src="~/Scripts/app.js"></script>
+    <script src="~/Scripts/common.js"></script>
+    <script src="~/Scripts/controllers/buttoninfo.js"></script>
+}
+@section scripts {
+
+}
