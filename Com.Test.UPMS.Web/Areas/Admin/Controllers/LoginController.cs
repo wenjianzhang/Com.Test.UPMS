@@ -1,8 +1,11 @@
 ﻿using Com.Test.Core.DataAccess;
+using Com.Test.Models.Model.AccessManagent.DataModel;
 using Com.Test.UPMS.Web.Areas.Admin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -12,7 +15,9 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
     public class LoginController : BaseController
     {
         private BaseRepository<LoginOnModel> loginRepository = new BaseRepository<LoginOnModel>();
+        private BaseRepository<RoleModel> RoleModelRepository = new BaseRepository<RoleModel>();
 
+        [AllowAnonymous]
         // GET: Admin/Login
         public ActionResult Index(string returnUrl)
         {
@@ -21,7 +26,8 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public void Login(LoginOnModel collection)
+        [AllowAnonymous]
+        public ActionResult Login(LoginOnModel collection)
         {
             bool isPersistent = true;
             var obj = loginRepository.GetOne("select * from UserInfo where UserName=@UserName and UserPassword=@Password and IsDel=0;", collection).FirstOrDefault();
@@ -29,9 +35,13 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             if (obj != null)
             {
                 SetFormAuthentication(isPersistent, obj);
-                //GetCurrentUserPermissions(obj.ID);
+                //bool bl = GetCurrentUserPermissions(obj.UserId);
 
-                Response.Redirect("~/Home/Index");
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Index", "login");
             }
         }
 
@@ -76,14 +86,16 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
                 httpCookie.Expires = utcNow.AddDays(7);
                 nameCookie.Expires = utcNow.AddDays(7);
             }
-
-            // FormsAuthentication.SetAuthCookie(name, false);
+            var identity = new GenericIdentity(name);
+            var principal = new GenericPrincipal(identity, null);
+            HttpContext.User = principal;
+            //FormsAuthentication.SetAuthCookie(name, true);
             HttpContext.Response.Cookies.Add(httpCookie);
 
             HttpContext.Response.Cookies.Add(nameCookie);
             ////////////////////////////////////////////////////////////
             #endregion
-            //ViewBag.aaa = Request.Cookies[".FA"].Value;
+            ViewBag.aaa = Request.Cookies[".FA"].Value;
         }
     }
 }

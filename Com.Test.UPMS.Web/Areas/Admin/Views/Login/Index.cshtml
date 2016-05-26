@@ -103,3 +103,13 @@
         </div><!-- /.col -->
     </div><!-- /.row -->
 </div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div style="color:#ffffff"> User.Identity.Name</div>
+}
+else
+{
+    <div style="color:#ffffff"> @User.Identity.IsAuthenticated </div>
+    <div>未登录</div>
+}

@@ -16,6 +16,8 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Models
 {
     public class LoginOnModel
     {
+        public int UserId { get; set; }
+
         [Required]
         [Display(Name = "用户名")]
         public string UserName { get; set; }

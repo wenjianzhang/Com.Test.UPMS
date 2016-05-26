@@ -1,11 +1,17 @@
-﻿using System.Web.Mvc;
+﻿using Com.Test.Models.Model.AccessManagent.DataModel;
+using Com.Test.UPMS.Web.Areas.Admin.Controllers;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Com.Test.UPMS.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
+            IEnumerable<RoleModel> list = GetPermissions.Result;
+
             return View();
         }
 
