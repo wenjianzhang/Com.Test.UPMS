@@ -26,9 +26,16 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<JsonResult> Get(int pageSize = 20, int pageCurrent = 1)
         {
-            string sql = "select * from SystemInfo where 1=1 and IsDel =0 ";
-            IPagedList<SystemInfoViewData> SystemInfoList = await repository.GetListAsync(sql, pageCurrent, pageSize);
-            return Json(AjaxResult.SetResult(new { list = SystemInfoList, pageCount = SystemInfoList.PageCount, totalItemCount = SystemInfoList.TotalItemCount, pageNumber = SystemInfoList.PageNumber, aa = SystemInfoList.Count }), JsonRequestBehavior.AllowGet);
+            try
+            {
+                string sql = "select * from SystemInfo where 1=1 and IsDel =0 ";
+                IPagedList<SystemInfoViewData> SystemInfoList = await repository.GetListAsync(sql, pageCurrent, pageSize);
+                return Json(AjaxResult.SetResult(new { list = SystemInfoList, pageCount = SystemInfoList.PageCount, totalItemCount = SystemInfoList.TotalItemCount, pageNumber = SystemInfoList.PageNumber, aa = SystemInfoList.Count }), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(AjaxResult.SetError(ex.Message, ErrorCode.ErrorCodes.系统错误), JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpGet]

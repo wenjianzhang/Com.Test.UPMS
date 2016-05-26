@@ -76,6 +76,7 @@ app.controller('userInfoController', ['$scope', 'apiHelper', function ($scope, a
                 if (!data.hasError) {
                     $scope.userInfo = data.data;
                 } else {
+                    showMsg.error("提示", data.error);
                 }
             });
             //加载关系信息
@@ -86,6 +87,7 @@ app.controller('userInfoController', ['$scope', 'apiHelper', function ($scope, a
                 if (!data.hasError) {
                     $scope.userInfo.RoleId = data.data.RoleId;
                 } else {
+                    showMsg.error("提示", data.error);
                 }
             });
         } else {
@@ -190,6 +192,7 @@ app.controller('userInfoController', ['$scope', 'apiHelper', function ($scope, a
                 $scope.dataUserList = data.data.list;
                 $scope.paginationConf.totalItems = data.data.totalItemCount;
             } else {
+                showMsg.error("提示", data.error);
             }
         });
     }
@@ -208,6 +211,7 @@ app.controller('userInfoController', ['$scope', 'apiHelper', function ($scope, a
             if (!data.hasError) {
                 $scope.dataRoleSelectList = data.data.list;
             } else {
+                showMsg.error("提示", data.error);
             }
         });
     }

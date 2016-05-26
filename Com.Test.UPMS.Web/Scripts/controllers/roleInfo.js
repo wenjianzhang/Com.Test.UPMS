@@ -64,6 +64,7 @@ app.controller('roleInfoController', ['$scope', 'apiHelper', function ($scope, a
                 if (!data.hasError) {
                     $scope.roleInfo = data.data;
                 } else {
+                    showMsg.error("提示", data.error);
                 }
             });
         } else {
@@ -143,6 +144,7 @@ app.controller('roleInfoController', ['$scope', 'apiHelper', function ($scope, a
                 $scope.dataRoleList = data.data.list;
                 $scope.paginationConf.totalItems = data.data.totalItemCount;
             } else {
+                showMsg.error("提示", data.error);
             }
         });
     }

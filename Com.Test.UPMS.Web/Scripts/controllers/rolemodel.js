@@ -26,6 +26,7 @@ app.controller('roleModelController', ['$scope', '$filter', '$location', 'apiHel
             if (!data.hasError) {
                 $scope.dataRoleList = data.data.list;
             } else {
+                showMsg.error("提示", data.error);
             }
         });
     }
@@ -43,6 +44,7 @@ app.controller('roleModelController', ['$scope', '$filter', '$location', 'apiHel
             if (!data.hasError) {
                 $scope.dataModelButtonList = data.data.list;
             } else {
+                showMsg.error("提示", data.error);
             }
         });
     }
@@ -58,6 +60,7 @@ app.controller('roleModelController', ['$scope', '$filter', '$location', 'apiHel
             if (!data.hasError) {
                 $scope.dataModelList = data.data.list;
             } else {
+                showMsg.error("提示", data.error);
             }
         });
     }
@@ -76,6 +79,7 @@ app.controller('roleModelController', ['$scope', '$filter', '$location', 'apiHel
             if (!data.hasError) {
                 $scope.dataModelButtonList = data.data.list;
             } else {
+                showMsg.error("提示", data.error);
             }
         });
     }
@@ -88,7 +92,7 @@ app.controller('roleModelController', ['$scope', '$filter', '$location', 'apiHel
                 } else {
                     showMsg.error("提示", "更新失败！");
                 }
-               // $scope.reload();
+                // $scope.reload();
             } else {
                 showMsg.error("提示", data.error);
             }
@@ -107,7 +111,7 @@ app.controller('roleModelController', ['$scope', '$filter', '$location', 'apiHel
                 } else {
                     showMsg.error("提示", "更新失败！");
                 }
-               // $scope.reload();
+                // $scope.reload();
             } else {
                 showMsg.error("提示", data.error);
             }

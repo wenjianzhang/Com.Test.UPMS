@@ -169,6 +169,7 @@ app.controller('modelInfoController', ['$scope', '$location', 'apiHelper', funct
                 $scope.dataModelList = data.data.list;
                 $scope.paginationConf.totalItems = data.data.totalItemCount;
             } else {
+                showMsg.error("提示", data.error);
             }
         });
     }

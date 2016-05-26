@@ -31,9 +31,16 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<JsonResult> GetRoleModel(int SystemId = 0)
         {
-            string sql = "select T2.* from SystemRole T1 left join RoleInfo T2 on T1.RoleId = T2.RoleId where T1.SystemId = @SystemId ";
-            IEnumerable<RoleModelViewData> RoleModelList = await RoleModelRepository.GetOneAsync(sql, new RoleModelViewData { SystemId = SystemId });
-            return Json(AjaxResult.SetResult(new { list = RoleModelList }), JsonRequestBehavior.AllowGet);
+            try
+            {
+                string sql = "select T2.* from SystemRole T1 left join RoleInfo T2 on T1.RoleId = T2.RoleId where T1.SystemId = @SystemId ";
+                IEnumerable<RoleModelViewData> RoleModelList = await RoleModelRepository.GetOneAsync(sql, new RoleModelViewData { SystemId = SystemId });
+                return Json(AjaxResult.SetResult(new { list = RoleModelList }), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(AjaxResult.SetError(ex.Message, ErrorCode.ErrorCodes.系统错误), JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpGet]

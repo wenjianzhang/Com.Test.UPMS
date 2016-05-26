@@ -64,6 +64,7 @@ app.controller('buttonInfoController', ['$scope', 'apiHelper', function ($scope,
                 if (!data.hasError) {
                     $scope.buttonInfo = data.data;
                 } else {
+                    showMsg.error("提示", data.error);
                 }
             });
         } else {
@@ -143,6 +144,7 @@ app.controller('buttonInfoController', ['$scope', 'apiHelper', function ($scope,
                 $scope.dataButtonList = data.data.list;
                 $scope.paginationConf.totalItems = data.data.totalItemCount;
             } else {
+                showMsg.error("提示", data.error);
             }
         });
     }

@@ -148,6 +148,7 @@ app.controller('systemInfoController', ['$scope', 'apiHelper', function ($scope,
                 $scope.dataSystemList = data.data.list;
                 $scope.paginationConf.totalItems = data.data.totalItemCount;
             } else {
+                showMsg.error("提示", data.error);
             }
         });
     }
@@ -169,6 +170,7 @@ app.controller('systemInfoController', ['$scope', 'apiHelper', function ($scope,
             if (!data.hasError) {
                 $scope.dataRoleSelectList = data.data.list;
             } else {
+                showMsg.error("提示", data.error);
             }
         });
     }

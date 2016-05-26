@@ -27,23 +27,30 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<JsonResult> Get(int pageSize = 20, int pageCurrent = 1, int SystemId = 0)
         {
-            string sql = "select * from ModelInfo where 1=1 and IsDel =0 ";
-            //if (SystemId != 0)
-            //{
-            sql += " and SystemId=" + SystemId + " ";
-            //}
-            IPagedList<ModelInfoViewData> ModelInfoList = await ModelInfoRepository.GetListAsync(sql, pageCurrent, pageSize);
-            List<ModelInfoViewData> modelInfoListReslut = new List<ModelInfoViewData>();
-            foreach (var itemp in ModelInfoList.Where(s => s.PModelId == 0))
+            try
             {
-                modelInfoListReslut.Add(itemp);
-                foreach (var item in ModelInfoList.Where(s => s.PModelId == itemp.ModelId))
+                string sql = "select * from ModelInfo where 1=1 and IsDel =0 ";
+                //if (SystemId != 0)
+                //{
+                sql += " and SystemId=" + SystemId + " ";
+                //}
+                IPagedList<ModelInfoViewData> ModelInfoList = await ModelInfoRepository.GetListAsync(sql, pageCurrent, pageSize);
+                List<ModelInfoViewData> modelInfoListReslut = new List<ModelInfoViewData>();
+                foreach (var itemp in ModelInfoList.Where(s => s.PModelId == 0))
                 {
-                    modelInfoListReslut.Add(item);
+                    modelInfoListReslut.Add(itemp);
+                    foreach (var item in ModelInfoList.Where(s => s.PModelId == itemp.ModelId))
+                    {
+                        modelInfoListReslut.Add(item);
+                    }
                 }
-            }
 
-            return Json(AjaxResult.SetResult(new { list = modelInfoListReslut, pageCount = ModelInfoList.PageCount, totalItemCount = ModelInfoList.TotalItemCount, pageNumber = ModelInfoList.PageNumber, aa = ModelInfoList.Count }), JsonRequestBehavior.AllowGet);
+                return Json(AjaxResult.SetResult(new { list = modelInfoListReslut, pageCount = ModelInfoList.PageCount, totalItemCount = ModelInfoList.TotalItemCount, pageNumber = ModelInfoList.PageNumber, aa = ModelInfoList.Count }), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(AjaxResult.SetError(ex.Message, ErrorCode.ErrorCodes.系统错误), JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpGet]
