@@ -1,0 +1,6 @@
+﻿body { }
+
+.height180 { height: 180px; }
+.height150 { height: 150px; }
+.height90 { height: 90px; }
+.gg > a:hover { border: 1px solid red; }

@@ -1,8 +1,13 @@
 ﻿@{
     ViewBag.Title = " 管理系统";
+    Layout = "~/Views/Shared/_Layout_home.cshtml";
 }
 
-<div class="main-content-inner">
+@section stylesplugin{
+    <link href="~/Content/home.css" rel="stylesheet" />
+}
+
+<div class="main-content-inner" style="background-color:#eaedf1;">
     <!-- #section:basics/content.breadcrumbs -->
     <div class="breadcrumbs breadcrumbs-fixed" id="breadcrumbs">
         <script type="text/javascript">
@@ -29,17 +34,7 @@
     </div>
 
     <!-- /section:basics/content.breadcrumbs -->
-    <div class="page-content">
-       
-        <div class="page-header">
-            <h1>
-                控制台
-                <small>
-                    <i class="ace-icon fa fa-angle-double-right"></i>
-                    覆盖 &amp; 开始
-                </small>
-            </h1>
-        </div><!-- /.page-header -->
+    <div class="page-content" style="background-color:#eaedf1;">
 
         <div class="row">
             <div class="col-xs-12">
@@ -59,16 +54,320 @@
                     @ViewBag.CompanyName
                 </div>
 
-                <div class="row">
-                   
+                <div class="">
+                    <div class="content-left col-xs-9 no-padding-left no-padding-right">
+                        <div class="col-xs-4 height150" style="background-color:#f9fafc;">
+                            <div style="padding-top:20px;">
+                                <img style="margin:0 auto; display:block; border-radius: 100%;border: 2px solid #FFF; max-width: 50px;" src="/assets/avatars/user.jpg" />
+                            </div>
+                            <div style="padding-top:20px; font-family:'Microsoft YaHei UI'; font-size:18px;">
+                                <span class="col-xs-12" style="text-align:center;">admin</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 padding-30 height150" style="background-color:#ffffff;">
+                            <div style="padding-top:30px; padding-left:20px; font-family:'Microsoft YaHei UI';">
+                                <span class="no-margin-right no-padding-right">通知</span>
+                                <span class="no-margin-left no-padding-left">:</span>
+                                @*<div class="hr hr32 hr-dotted"></div>*@
+                            </div>
+                            <div style="padding-left:20px; font-family:'Microsoft YaHei UI';">
+                                <span class="text-right  no-padding-right" style="font-size:25px;">0</span>
+                                <span class="text-left no-padding-left" style="padding-top:11px; color:lightgray;">条</span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4 height150" style="background-color:#ffffff;">
+                            <div style="padding-top:30px; padding-left:20px; font-family:'Microsoft YaHei UI';">
+                                <span class="no-margin-right no-padding-right">待办</span><span class="no-margin-left no-padding-left">:</span>
+                                @*<div class="hr hr32 hr-dotted"></div>*@
+                            </div>
+                            <div style="padding-left:20px; font-family:'Microsoft YaHei UI';">
+                                <span class="text-right  no-padding-right" style="font-size:25px;">0</span>
+                                <span class="text-left no-padding-left" style="padding-top:11px; color:lightgray;">条</span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12" style="background-color:#ffffff; margin-top:10px;">
+                            <div class="col-xs-12" style="padding-top:10px;">
+                                登陆记录
+                            </div>
+                            <div class="col-xs-12 hr hr10 hr-dotted"></div>
+                            <div class="col-xs-12">
+                                <table id="simple-table" class="table table-striped table-bordered table-hover no-margin-bottom">
+                                    <thead>
+                                        <tr>
+
+                                            <th class="col-lg-4">登陆ip</th>
+
+                                            <th class="col-lg-4">
+                                                <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                                                时间
+                                            </th>
+                                            <th class="hidden-480 col-lg-4">状态</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="col-xs-12" style="max-height: 250px; overflow-y: auto; overflow-x:hidden; ">
+                                <table id="simple-table" class="table table-striped table-bordered table-hover">
+                                    @*<thead>
+                                            <tr>
+
+                                                <th>登陆ip</th>
+
+                                                <th>
+                                                    <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                                                    时间
+                                                </th>
+                                                <th class="hidden-480">状态</th>
+                                            </tr>
+                                        </thead>*@
+
+                                    <tbody>
+                                        <tr>
+
+                                            <td class="col-lg-4">
+                                                127.0.0.1
+                                            </td>
+                                            <td class="col-lg-4">2016-05-12 12:11</td>
+                                            <td class="hidden-480 col-lg-4">
+                                                <span class="label label-sm label-success">正常</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                            <td class="col-lg-4">
+                                                127.0.0.1
+                                            </td>
+                                            <td class="col-lg-4">2016-05-12 12:11</td>
+                                            <td class="hidden-480 col-lg-4">
+                                                <span class="label label-sm label-success">正常</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                            <td class="col-lg-4">
+                                                127.0.0.1
+                                            </td>
+                                            <td class="col-lg-4">2016-05-12 12:11</td>
+                                            <td class="hidden-480 col-lg-4">
+                                                <span class="label label-sm label-success">正常</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+
+                                            <td class="col-lg-4">
+                                                127.0.0.1
+                                            </td>
+                                            <td class="col-lg-4">2016-05-12 12:11</td>
+                                            <td class="hidden-480 col-lg-4">
+                                                <span class="label label-sm label-success">正常</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="col-lg-4">
+                                                127.0.0.1
+                                            </td>
+                                            <td class="col-lg-4">2016-05-12 12:11</td>
+                                            <td class="hidden-480 col-lg-4">
+                                                <span class="label label-sm label-success">正常</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="col-lg-4">
+                                                127.0.0.1
+                                            </td>
+                                            <td class="col-lg-4">2016-05-12 12:11</td>
+                                            <td class="hidden-480 col-lg-4">
+                                                <span class="label label-sm label-success">正常</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-3 height150  no-padding-right content-right">
+                        <div class="col-xs-12 height150 gg no-padding no-margin-right" style="background-color:#ffffff;">
+                            <a href="#" class="col-xs-12 block no-margin no-padding">
+                                <img class="col-xs-12 block  no-margin no-padding" src="https://img.alicdn.com/tps/TB1A8U3JVXXXXbIXXXXXXXXXXXX-640-180.jpg" />
+                            </a>
+                            <a href="#" class="col-xs-12 block no-margin no-padding">
+                                <img class="col-xs-12 block no-padding" src="https://img.alicdn.com/tps/TB1A8U3JVXXXXbIXXXXXXXXXXXX-640-180.jpg" />
+                            </a>
+                        </div>
+                        <div class="col-xs-12 no-padding no-margin-right" style="background-color:#ffffff; margin-top:10px;">
+                            <div class="col-xs-12" style="padding-top:10px;">
+                                产品功能和升级
+                            </div>
+                            <div class="col-xs-12 hr hr10 hr-dotted"></div>
+                            <div class="col-xs-12 no-padding" id="timeline-2" style="max-height: 280px; overflow-y: auto; overflow-x:hidden; box-sizing: content-box;">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-10 col-sm-offset-1 no-margin no-padding">
+                                        <!-- #section:pages/timeline.style2 -->
+                                        <div class="timeline-container timeline-style2">
+                                            <span class="timeline-label">
+                                                <b>5月</b>
+                                            </span>
+
+                                            <div class="timeline-items">
+                                                <div class="timeline-item clearfix">
+                                                    <div class="timeline-info">
+                                                        <span class="timeline-date">11:15 pm</span>
+
+                                                        <i class="timeline-indicator btn btn-info no-hover"></i>
+                                                    </div>
+
+                                                    <div class="widget-box transparent">
+                                                        <div class="widget-body">
+                                                            <div class="widget-main no-padding">
+                                                                @*<span class="bigger-110">*@
+                                                                @*<a href="#" class="purple bolder">Susan</a>*@
+                                                                权限管理
+                                                                @*</span>*@
+
+                                                                @*<br />
+                                                                    <i class="ace-icon fa fa-hand-o-right grey bigger-125"></i>
+                                                                    <a href="#">Click to read &hellip;</a>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="timeline-item clearfix">
+                                                    <div class="timeline-info">
+                                                        <span class="timeline-date">12:30 pm</span>
+
+                                                        <i class="timeline-indicator btn btn-info no-hover"></i>
+                                                    </div>
+
+                                                    <div class="widget-box transparent">
+                                                        <div class="widget-body">
+                                                            <div class="widget-main no-padding">
+                                                                用户信息管理
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="timeline-item clearfix">
+                                                    <div class="timeline-info">
+                                                        <span class="timeline-date">11:15 pm</span>
+
+                                                        <i class="timeline-indicator btn btn-info no-hover"></i>
+                                                    </div>
+
+                                                    <div class="widget-box transparent">
+                                                        <div class="widget-body">
+                                                            <div class="widget-main no-padding">
+                                                                动作的增删改查
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="timeline-item clearfix">
+                                                    <div class="timeline-info">
+                                                        <span class="timeline-date">9:00 am</span>
+
+                                                        <i class="timeline-indicator btn btn-info no-hover"></i>
+                                                    </div>
+
+                                                    <div class="widget-box transparent">
+                                                        <div class="widget-body">
+                                                            <div class="widget-main no-padding">
+                                                                发布
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.timeline-items -->
+                                        </div><!-- /.timeline-container -->
+                                        <!-- /section:pages/timeline.style2 -->
+                                        <div class="timeline-container timeline-style2">
+                                            <span class="timeline-label">
+                                                <b>4月</b>
+                                            </span>
+
+                                            <div class="timeline-items">
+                                                <div class="timeline-item clearfix">
+                                                    <div class="timeline-info">
+                                                        <span class="timeline-date">9:00 am</span>
+
+                                                        <i class="timeline-indicator btn btn-success no-hover"></i>
+                                                    </div>
+
+                                                    <div class="widget-box transparent">
+                                                        <div class="widget-body">
+                                                            <div class="widget-main no-padding">
+                                                                数据库设计
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="timeline-item clearfix">
+                                                    <div class="timeline-info">
+                                                        <span class="timeline-date">9:00 am</span>
+
+                                                        <i class="timeline-indicator btn btn-success no-hover"></i>
+                                                    </div>
+
+                                                    <div class="widget-box transparent">
+                                                        <div class="widget-body">
+                                                            <div class="widget-main no-padding">
+                                                                框架搭建
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="timeline-item clearfix">
+                                                    <div class="timeline-info">
+                                                        <span class="timeline-date">9:00 am</span>
+
+                                                        <i class="timeline-indicator btn btn-success no-hover"></i>
+                                                    </div>
+
+                                                    <div class="widget-box transparent">
+                                                        <div class="widget-body">
+                                                            <div class="widget-main no-padding">
+                                                                服务组件库设计
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="timeline-item clearfix">
+                                                    <div class="timeline-info">
+                                                        <span class="timeline-date">9:00 am</span>
+
+                                                        <i class="timeline-indicator btn btn-success no-hover"></i>
+                                                    </div>
+
+                                                    <div class="widget-box transparent">
+                                                        <div class="widget-body">
+                                                            <div class="widget-main no-padding">
+                                                                公共日志组建
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.timeline-items -->
+                                        </div><!-- /.timeline-container -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div><!-- /.row -->
+                <div>
+                </div>
                 <!-- #section:custom/extra.hr -->
-                <div class="hr hr32 hr-dotted"></div>
-
-
-
-                <div class="hr hr32 hr-dotted"></div>
-
                 <!-- /.row -->
                 <!-- PAGE CONTENT ENDS -->
             </div><!-- /.col -->
