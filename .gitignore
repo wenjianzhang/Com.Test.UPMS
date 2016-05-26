@@ -243,3 +243,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/Com.Test.UPMS.Web/Web - 复制.config
+/Com.Test.UPMS.Web/Web - 复制.Debug.config
+/Com.Test.UPMS.Web/Web - 复制.Release.config
