@@ -31,7 +31,7 @@
     </div>
 </div><!-- /.sidebar-shortcuts -->
 
-<ul class="nav nav-list">
+<ul class="nav nav-list" ng-init="loadcurrentmodel()">
     <li class="">
         <a href="/home/index">
             <i class="menu-icon fa fa-tachometer"></i>
@@ -40,114 +40,136 @@
 
         <b class="arrow"></b>
     </li>
-
-    <li class="active">
-        <!--第一级菜单-->
+    <li class="" ng-repeat="item in dataCurrentModel |filter:{PModelId:0}">
         <a href="#" class="dropdown-toggle">
-            <i class="menu-icon glyphicon glyphicon-th-list"></i>
-            <span class="menu-text">
-                基础信息管理
-            </span>
-
+            <i class="menu-icon {{item.ModelIcon}}"></i>
+            <span class="menu-text"> {{item.ModelName}} </span>
             <b class="arrow fa fa-angle-down"></b>
         </a>
-
         <b class="arrow"></b>
-
         <ul class="submenu">
             <!--第二级菜单-->
 
-            <li class="">
+            <li class="" ng-repeat="itemc in dataCurrentModel |filter:{PModelId:item.ModelId}">
                 <!--第二级菜单-->
-                <a href="/Admin/UserInfo/Index">
+                <a href="{{itemc.ModelUrl}}">
                     <i class="menu-icon fa fa-caret-right"></i>
-                    <i class="glyphicon glyphicon-user"></i>
-                    用户信息管理
+                    <i class="{{itemc.ModelIcon}}"></i>
+                    {{itemc.ModelName}}
                 </a>
                 <b class="arrow"></b>
             </li>
-            <li class="">
+        </ul>
+    </li>
+
+    @*<li class="">
+            <a href="/home/index">
+                <i class="menu-icon fa fa-tachometer"></i>
+                <span class="menu-text"> 控制台 </span>
+            </a>
+
+            <b class="arrow"></b>
+        </li>*@
+
+    @*<li class="active">
+            <!--第一级菜单-->
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon glyphicon glyphicon-th-list"></i>
+                <span class="menu-text">
+                    基础信息管理
+                </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
                 <!--第二级菜单-->
-                <a href="/Admin/RoleInfo/Index">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    <i class="fa fa-users"></i>
-                    角色信息管理
-                </a>
-                <b class="arrow"></b>
-            </li>
-            <li class="">
-                <!--第二级菜单-->
-                <a href="/Admin/SystemInfo/Index">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    <i class="fa fa-desktop"></i>
-                    系统信息管理
-                </a>
-                <b class="arrow"></b>
-            </li>
-            @*<li class="">
-                    <a href="/Admin/ModelInfo/Index">
+
+                <li class="">
+                    <!--第二级菜单-->
+                    <a href="/Admin/UserInfo/Index">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        <i class="glyphicon glyphicon-list"></i>
-                        菜单信息管理
+                        <i class="glyphicon glyphicon-user"></i>
+                        用户信息管理
                     </a>
                     <b class="arrow"></b>
-                </li>*@
-            <li class="">
-                <!--第二级菜单-->
-                <a href="/Admin/buttoninfo/Index">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    <i class="fa fa-cubes"></i>
-                    按钮信息管理
-                </a>
-                <b class="arrow"></b>
-            </li>
-        </ul>
-    </li>
-    <li class="">
-        <!--第一级菜单-->
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-file-archive-o"></i>
-            <span class="menu-text">
-                日志信息管理
-            </span>
+                </li>
+                <li class="">
+                    <!--第二级菜单-->
+                    <a href="/Admin/RoleInfo/Index">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        <i class="fa fa-users"></i>
+                        角色信息管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <!--第二级菜单-->
+                    <a href="/Admin/SystemInfo/Index">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        <i class="fa fa-desktop"></i>
+                        系统信息管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <!--第二级菜单-->
+                    <a href="/Admin/buttoninfo/Index">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        <i class="fa fa-cubes"></i>
+                        按钮信息管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+        <li class="">
+            <!--第一级菜单-->
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-file-archive-o"></i>
+                <span class="menu-text">
+                    日志信息管理
+                </span>
 
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
 
-        <b class="arrow"></b>
+            <b class="arrow"></b>
 
-        <ul class="submenu">
-            <!--第二级菜单-->
+            <ul class="submenu">
+                <!--第二级菜单-->
 
-            <li class="">
-                <!--第二级菜单-->
-                <a href="/Manager/DataDiction/Index">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    <i class="glyphicon glyphicon-user"></i>
-                    登陆日志管理
-                </a>
-                <b class="arrow"></b>
-            </li>
-            <li class="">
-                <!--第二级菜单-->
-                <a href="/Manager/DataDiction/Index">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    <i class="fa fa-pencil-square-o"></i>
-                    操作日志管理
-                </a>
-                <b class="arrow"></b>
-            </li>
-            <li class="">
-                <!--第二级菜单-->
-                <a href="/Manager/GoodsInfo/Index">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    <i class="fa fa-exclamation-triangle"></i>
-                    错误日志管理
-                </a>
-                <b class="arrow"></b>
-            </li>
-        </ul>
-    </li>
+                <li class="">
+                    <!--第二级菜单-->
+                    <a href="/Manager/DataDiction/Index">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        <i class="glyphicon glyphicon-user"></i>
+                        登陆日志管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <!--第二级菜单-->
+                    <a href="/Manager/DataDiction/Index">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        <i class="fa fa-pencil-square-o"></i>
+                        操作日志管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <!--第二级菜单-->
+                    <a href="/Manager/GoodsInfo/Index">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        <i class="fa fa-exclamation-triangle"></i>
+                        错误日志管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>*@
 </ul><!-- /.nav-list -->
 <!-- #section:basics/sidebar.layout.minimize -->
 <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

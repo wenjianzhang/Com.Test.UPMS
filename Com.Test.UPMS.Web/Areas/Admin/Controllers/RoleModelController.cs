@@ -54,15 +54,15 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<JsonResult> GetModelButtonInfo(int SystemId = 0)
         {
-            string sql = "select T1.*,T3.* from SystemModel T1 left join ModelButton T2 on T1.ModelId = T2.ModelId left join ButtonInfo T3 on T2.ButtonId = T3.ButtonId where T1.SystemId = @SystemId ";
+            string sql = "select T1.SystemId,T1.ModelId,T3.* from ModelInfo T1  left join ModelButton T2 on T1.ModelId = T2.ModelId left join ButtonInfo T3 on T2.ButtonId = T3.ButtonId where T1.SystemId = @SystemId ";
             IEnumerable<ModelButtonViewData> ModelButtonInfoList = await ModelButtonRepository.GetOneAsync(sql, new ModelButtonViewData { SystemId = SystemId });
             return Json(AjaxResult.SetResult(new { list = ModelButtonInfoList }), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public async Task<JsonResult> SetModelButtonInfo(int SystemId = 0, int RoleId = 0)
-        {
-            string sql = "select T1.*,T3.* from SystemModel T1 left join ModelButton T2 on T1.ModelId = T2.ModelId left join ButtonInfo T3 on T2.ButtonId = T3.ButtonId where T1.SystemId = @SystemId ";
+        {//select T1.*,T3.* from SystemModel T1
+            string sql = "select T1.SystemId,T1.ModelId,T3.* from ModelInfo T1  left join ModelButton T2 on T1.ModelId = T2.ModelId left join ButtonInfo T3 on T2.ButtonId = T3.ButtonId where T1.SystemId = @SystemId ";
 
             string sql2 = "select * from RoleModel where SystemId=@SystemId and RoleId=@RoleId;";
             try
@@ -95,6 +95,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             string sql = "delete from RoleModel where SystemId=@SystemId; ";
 
+            //string insert_PModel = "select PModelId,SystemId from ModelInfo where ModeId in( 0";
             JavaScriptSerializer Serializer = new JavaScriptSerializer();
 
             List<ModelButtonInfoViewData> ModelButton = Serializer.Deserialize<List<ModelButtonInfoViewData>>(ModelButtonList);
@@ -103,6 +104,11 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             {
                 sql += string.Format("insret into RoleModel(SystemId,ModelId,RoleId,ButtonId)values(@SystemId,@ModelId,'" + RoleId + "',@ButtonId);", item);
             }
+            //foreach (var item in ModelButton)
+            //{
+            //    insert_PModel += "," + item.ModelId;
+            //}
+            //insert_PModel += ");";
             if (ModelButton.Count() > 0)
             {
                 var i = await ModelRoleRepository.CreateAsync(sql, new ModelRoleViewData { SystemId = ModelButton.FirstOrDefault().SystemId });

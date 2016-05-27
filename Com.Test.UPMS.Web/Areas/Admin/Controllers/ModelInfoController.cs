@@ -105,6 +105,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             entity.UpdateDate = DateTime.Now;
             string insertSQL = @"INSERT INTO ModelInfo (
                                 ModelName ,
+SystemId,
                                 ModelCode ,
                                 ModelIcon ,
                                 PModelId ,
@@ -114,7 +115,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
                                 Creater ,
                                 UpdateDate ,
                                 Updater ,
-                                IsDel ) VALUES (@ModelName,@ModelCode,@ModelIcon,@PModelId,@ModelDesc,@Sort,@CreateDate,@Creater,@UpdateDate,@Updater,0);select @@IDENTITY";
+                                IsDel ) VALUES (@ModelName,@SystemId,@ModelCode,@ModelIcon,@PModelId,@ModelDesc,@Sort,@CreateDate,@Creater,@UpdateDate,@Updater,0);select @@IDENTITY";
 
             string insertButtonsSQL = @"Delete from AccessManagent.ModelButton where ModelId=@ModelId;";
 
@@ -188,6 +189,20 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 return Json(AjaxResult.SetError(ex.Message, ErrorCode.ErrorCodes.系统错误));
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetCurrentModel()
+        {
+            try
+            {
+                IEnumerable<ModelInfo> modelInfo = await GetModel;
+                return Json(AjaxResult.SetResult(modelInfo), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(AjaxResult.SetError(ex.Message, ErrorCode.ErrorCodes.系统错误), JsonRequestBehavior.AllowGet);
             }
         }
     }

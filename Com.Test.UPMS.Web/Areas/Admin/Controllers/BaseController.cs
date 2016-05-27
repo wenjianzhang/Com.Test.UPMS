@@ -11,6 +11,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
     public class BaseController : Controller
     {
         private BaseRepository<RoleModel> RoleModelRepository = new BaseRepository<RoleModel>();
+        private BaseRepository<ModelInfo> ModelInfoRepository = new BaseRepository<ModelInfo>();
 
         public virtual string CurrentUserID
         {
@@ -50,6 +51,23 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             }
         }
 
+        public Task<IEnumerable<ModelInfo>> GetModel
+        {
+            get
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    return GetCurrentUserModel(User.Identity.Name);
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 控制按钮
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private Task<IEnumerable<RoleModel>> GetCurrentUserPermissions(string name)
         {
             string sql = @"select T1.* from RoleModel T1
@@ -57,6 +75,16 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
                             left join UserInfo T3 on T2.UserId = T3.UserId
                             where T3.UserName='" + name + "' and T1.SystemId =1";
             return RoleModelRepository.GetOneAsync(sql, new RoleModel { });
+        }
+
+        private Task<IEnumerable<ModelInfo>> GetCurrentUserModel(string name)
+        {
+            string sql = @"select distinct  T1.* from ModelInfo T1
+                            left join RoleModel T2 on T1.ModelId = T2.ModelId
+                            left join UserRole T3 on T2.RoleId = T3.RoleId
+                            left join UserInfo T4 on T3.UserId = T4.UserId
+                            where T4.UserName='" + name + "' and T1.IsDel=0";
+            return ModelInfoRepository.GetOneAsync(sql, new ModelInfo { });
         }
     }
 }

@@ -10,8 +10,6 @@ namespace Com.Test.UPMS.Web.Controllers
     {
         public ActionResult Index()
         {
-            IEnumerable<RoleModel> list = GetPermissions.Result;
-
             return View();
         }
 
@@ -23,6 +21,20 @@ namespace Com.Test.UPMS.Web.Controllers
         }
 
         public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult NoFound()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult ServerError()
         {
             ViewBag.Message = "Your contact page.";
 

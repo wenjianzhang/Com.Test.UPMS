@@ -215,4 +215,15 @@ app.controller('userInfoController', ['$scope', 'apiHelper', function ($scope, a
             }
         });
     }
+
+    $scope.loadcurrentmodel = function () {
+        var params = {};
+        apiHelper.callService("/admin/modelInfo/GetCurrentModel", "GET", params).then(function (data) {
+            if (!data.hasError) {
+                $scope.dataCurrentModel = data.data;
+            } else {
+                showMsg.error("提示", data.error);
+            }
+        });
+    }
 }]);

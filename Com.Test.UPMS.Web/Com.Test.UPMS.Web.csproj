@@ -45,11 +45,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Com.Test.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Com.Test.Core.1.0.0\lib\Com.Test.Core.dll</HintPath>
+      <HintPath>..\packages\Com.Test.Core.1.0.2\lib\Com.Test.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Com.Test.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Com.Test.Models.1.0.9\lib\Com.Test.Models.dll</HintPath>
+      <HintPath>..\packages\Com.Test.Models.1.0.10\lib\Com.Test.Models.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -235,6 +235,7 @@
     <Compile Include="Areas\Admin\Models\UserInfoView.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HttpStatusController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\testController.cs" />
     <Compile Include="Filter\AuthorizeUserAttribute.cs" />
@@ -557,6 +558,7 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\appbase.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\appnoui.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -743,6 +745,7 @@
     <Content Include="Areas\Admin\Views\UserInfo\Index.cshtml" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\controllers\buttoninfo.js" />
+    <Content Include="Scripts\controllers\getmodel.js" />
     <Content Include="Scripts\controllers\modelinfo.js" />
     <Content Include="Scripts\controllers\roleInfo.js" />
     <Content Include="Scripts\controllers\rolemodel.js" />
@@ -768,6 +771,7 @@
     <Content Include="Areas\Admin\Views\RoleModel\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Com.Test.Core.dll.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -1567,6 +1571,9 @@
     <Content Include="Views\Shared\Partials\_PartialMenuList.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Shared\_Layout_home.cshtml" />
+    <Content Include="Views\HttpStatus\Http404.cshtml" />
+    <Content Include="Views\HttpStatus\Http500.cshtml" />
+    <Content Include="Views\HttpStatus\Http403.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

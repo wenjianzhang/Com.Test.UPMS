@@ -2,6 +2,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var pagesize = Request.QueryString["pagesize"] == null ? "10" : Request.QueryString["pagesize"];
+    var sid = Request.QueryString["sid"] == null ? "10" : Request.QueryString["sid"];
 }
 
 @section stylesplugin{
@@ -53,7 +54,7 @@
     </style>
 }
 
-<div class="main-content-inner" ng-app="adminApp">
+<div class="main-content-inner" @*ng-app="adminApp"*@>
     <!-- #section:basics/content.breadcrumbs -->
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">

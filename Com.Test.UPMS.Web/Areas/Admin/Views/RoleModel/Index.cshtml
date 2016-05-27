@@ -56,7 +56,7 @@
     </style>
 }
 
-<div class="main-content-inner" ng-app="adminApp">
+<div class="main-content-inner" @*ng-app="adminApp"*@>
     <!-- #section:basics/content.breadcrumbs -->
     <div ng-controller="roleModelController">
 
@@ -161,7 +161,7 @@
                                 </td>
 
                                 <td>
-                                    <div class="hidden-sm hidden-xs action-Systems" ng-if="item.PModelId==1">
+                                    <div class="hidden-sm hidden-xs action-Systems" @*ng-if="item.PModelId==1"*@>
 
                                         <label class="pos-rel btn btn-minier {{itemc.ButtonClass}}" title="{{itemc.ButtonName}}" ng-repeat="itemc in dataModelButtonList | filter:{ModelId:item.ModelId}" ng-if="itemc.ButtonId>0">
                                             <input type="checkbox" class="ace checkboxitem" name="{{itemc.ModelId}}{{itemc.ButtonName}}" ng-model="itemc.Checked" ng-change="updateMB(item.SystemId,itemc.ModelId,itemc.ButtonId,itemc.Checked)" />

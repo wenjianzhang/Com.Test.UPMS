@@ -386,13 +386,13 @@
     </div>
 
     <!-- /section:basics/navbar.layout -->
-    <div class="main-container" id="main-container">
+    <div class="main-container" id="main-container" ng-app="adminApp">
         <script type="text/javascript">
             try { ace.settings.check('main-container', 'fixed') } catch (e) { }
         </script>
 
         <!-- #section:basics/sidebar -->
-        <div id="sidebar" class="sidebar sidebar-fixed responsive">
+        <div id="sidebar" class="sidebar sidebar-fixed responsive" ng-controller="currentModelController">
             <script type="text/javascript">
                 try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
             </script>
@@ -475,7 +475,6 @@
     <script src="~/assets/js/bootstrap.js"></script>
 
     @RenderSection("scriptsplugin", required: false)
-
     <!--[if lte IE 8]>
           <script src="/assets/js/excanvas.js"></script>
         <![endif]-->
@@ -720,6 +719,8 @@
              })
          </script>-->
     @RenderSection("scripts", required: false)
+
+    <script src="~/Scripts/controllers/getmodel.js"></script>
     @*<script src="~/Scripts/common.js"></script>*@
     <!-- the following scripts are used in demo only for onpage help and you don't need them -->
     <link rel="stylesheet" href="~/assets/css/ace.onpage-help.css" />

@@ -34,15 +34,8 @@ app.controller('modelInfoController', ['$scope', '$location', 'apiHelper', funct
         ModelName: "",
         ModelCode: "",
         ModelIcon: "",
+        SystemId: 0,
         ModelButtons: [],
-        SystemId: function () {
-            if ($location.search().sid) {
-                return $location.search().sid;
-            }
-            else {
-                return 0;
-            }
-        },
         ClearData: function () {
             modelInfo.Creater = "";
             modelInfo.ModelButtons = [];
@@ -55,6 +48,7 @@ app.controller('modelInfoController', ['$scope', '$location', 'apiHelper', funct
             modelInfo.ModelName = "";
             modelInfo.ModelCode = "";
             modelInfo.ModelIcon = "";
+            modelInfo.SystemId = 0
         }
     };
 
@@ -70,10 +64,14 @@ app.controller('modelInfoController', ['$scope', '$location', 'apiHelper', funct
         $scope.modelInfo.ModelCode = "";
         $scope.modelInfo.ModelIcon = "";
         $scope.modelInfo.ModelDesc = "";
+        $scope.modelInfo.SystemId = 0;
     };
 
     //打开Form Bind数据
     $scope.showForm = function (id) {
+        if ($location.search().sid) {
+            $scope.modelInfo.SystemId = $location.search().sid;
+        }
         if (id) {
             $("#updateForm").show();
             $('#modal-map').modal({ backdrop: 'static', keyboard: false, show: true });
@@ -104,6 +102,9 @@ app.controller('modelInfoController', ['$scope', '$location', 'apiHelper', funct
 
     //创建或修改数据
     $scope.updateClick = function () {
+        if ($location.search().sid) {
+            $scope.modelInfo.SystemId = $location.search().sid;
+        }
         if ($scope.modelInfo.ModelId) {
             var params = $scope.modelInfo;
             apiHelper.callService(apiUrl + "Edit", "POST", params).then(function (data) {
