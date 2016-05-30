@@ -1,6 +1,7 @@
 ﻿using Com.Test.Core.DataAccess;
 using Com.Test.Models.Data;
 using Com.Test.Models.Model.AccessManagent.DataModel;
+using Com.Test.UPMS.Web.Areas.Admin.Models;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,17 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         private BaseRepository<ButtonInfo> ButtonInfoRepository = new BaseRepository<ButtonInfo>();
 
         // GET: Admin/ButtonInfo
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            //try
+            //{
+            //    IEnumerable<PageModelButtonModel> PageModelButtons = await GetPermissions;
+            //    ViewBag.PageModelButtons = PageModelButtons.Where(s => s.ModelUrl.ToLower() == Request.Url.AbsolutePath.ToLower());
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw;
+            //}
             return View();
         }
 
@@ -120,6 +130,20 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 return Json(AjaxResult.SetError(ex.Message, ErrorCode.ErrorCodes.系统错误));
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetPageButton()
+        {
+            try
+            {
+                Dictionary<string, bool> dic = GetCurrentUserPageButton();
+                return Json(AjaxResult.SetResult(dic), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(AjaxResult.SetError(ex.Message, ErrorCode.ErrorCodes.系统错误), JsonRequestBehavior.AllowGet);
             }
         }
     }

@@ -1,7 +1,9 @@
-﻿@{
+﻿@using Com.Test.UPMS.Web.Areas.Admin.Models;
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var pagesize = Request.QueryString["pagesize"] == null ? "10" : Request.QueryString["pagesize"];
+
 }
 
 @section stylesplugin{
@@ -9,7 +11,7 @@
     <link href="~/Content/pagination.css" rel="stylesheet" />
 }
 
-<div class="main-content-inner" @*ng-app="adminApp"*@>
+<div class="main-content-inner" @* ng-app="adminApp" *@>
     <!-- #section:basics/content.breadcrumbs -->
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
@@ -31,12 +33,12 @@
     </div>
 
     <!-- /section:basics/content.breadcrumbs -->
-    <div class="page-content no-margin-bottom no-padding-bottom">
-        <div class="row  no-margin-bottom" ng-controller="buttonInfoController">
+    <div class="page-content no-margin-bottom no-padding-bottom" ng-controller="buttonInfoController">
+        <div class="row  no-margin-bottom" ng-init="loadcurrentpagebutton()">
             <div class="col-xs-12 no-margin-bottom">
                 <div class="row">
                     <form class="form-inline" role="form">
-                        <div class="pull-left col-xs-8 clearfix ">
+                        <div class="pull-left col-xs-8 clearfix " ng-if="buttons.Get">
                             <input type="text" class="col-xs-2" placeholder="按钮名称" name="keyname" value="" />
 
                             <button type="button" class="btn btn-default btn-sm" ng-click="select();">
@@ -44,12 +46,12 @@
                             </button>
                         </div>
                         <div class="col-xs-4 clearfix ">
+                            <button ng-if="buttons.Refresh" class="btn btn-sm btn-primary pull-right" type="button" ng-click="reload();"><i class="ace-icon glyphicon glyphicon-refresh bigger-110"></i>刷新</button>
 
-                            <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="reload();"><i class="ace-icon glyphicon glyphicon-refresh bigger-110"></i>刷新</button>
                             <span class="pull-right">&nbsp;</span>
                             @*<button class="btn btn-sm btn-danger pull-right" type="button" ng-click="delAll();"><i class="ace-icon fa fa-trash-o bigger-110"></i>删除</button>
                                 <span class="pull-right">&nbsp;</span>*@
-                            <button class="btn btn-sm btn-success pull-right col-sm-offset-1" type="button" ng-click="showForm(0);"><i class="ace-icon fa fa-plus bigger-110"></i>新增</button>
+                            <button class="btn btn-sm btn-success pull-right col-sm-offset-1" ng-if="buttons.Insert" type="button" ng-click="showForm(0);"><i class="ace-icon fa fa-plus bigger-110"></i>新增</button>
                         </div>
                     </form>
                 </div>
@@ -100,11 +102,11 @@
                                                 <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                             </a>
 
-                                            <a class="green" href="#" ng-click="showForm(item.ButtonId)">
+                                            <a class="green" href="#" ng-click="showForm(item.ButtonId)" ng-if="buttons.Update">
                                                 <i class="ace-icon fa fa-pencil bigger-130"></i>
                                             </a>
 
-                                            <a class="red" href="#" ng-click="delete (item.ButtonId)">
+                                            <a class="red" href="#" ng-click="delete (item.ButtonId)" ng-if="buttons.Delete">
                                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                             </a>
                                         </div>
@@ -125,7 +127,7 @@
                                                     </li>
 
                                                     <li>
-                                                        <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit" ng-click="showForm(item.ButtonId)">
+                                                        <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit" ng-click="showForm(item.ButtonId)" ng-if="buttons.Update">
                                                             <span class="green">
                                                                 <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                             </span>
@@ -133,7 +135,7 @@
                                                     </li>
 
                                                     <li>
-                                                        <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete" ng-click="delete (item.ButtonId)">
+                                                        <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete" ng-click="delete (item.ButtonId)" ng-if="buttons.Delete">
                                                             <span class="red">
                                                                 <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                             </span>

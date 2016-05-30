@@ -19,8 +19,10 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         private BaseRepository<ModelButton> ModelButtonRepository = new BaseRepository<ModelButton>();
 
         // GET: Admin/ModelInfo
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            IEnumerable<PageModelButtonModel> PageModelButtons = await GetPermissions;
+            ViewBag.PageModelButtons = PageModelButtons.Where(s => s.ModelUrl.ToLower() == Request.Url.AbsolutePath.ToLower());
             return View();
         }
 

@@ -5,7 +5,11 @@
 //var app = angular.module('myApp', ['ui.bootstrap']);
 
 var apiUrl = "/admin/buttoninfo/";
+app.config(['$locationProvider', function ($locationProvider) {
+    $locationProvider.html5Mode(true);
+}]);
 
+//app.controller('buttonInfoController', ['$scope', '$location', 'apiHelper', function ($scope, $location, apiHelper) {
 app.controller('buttonInfoController', ['$scope', 'apiHelper', function ($scope, apiHelper) {
     $scope.paginationConf = {
         currentPage: 1,
@@ -16,6 +20,12 @@ app.controller('buttonInfoController', ['$scope', 'apiHelper', function ($scope,
         onChange: function () {
             $scope.load($scope.paginationConf.itemsPerPage, $scope.paginationConf.currentPage);
         }
+    };
+    $scope.buttons = {
+        Inster: false,
+        Get: false,
+        Update: false,
+        Delete: false
     };
 
     $scope.buttonInfo = {
@@ -152,5 +162,19 @@ app.controller('buttonInfoController', ['$scope', 'apiHelper', function ($scope,
     //重新加载
     $scope.reload = function () {
         $scope.load($scope.paginationConf.itemsPerPage, $scope.paginationConf.currentPage);
+    }
+
+    $scope.biaoji = 0;
+
+    $scope.loadcurrentpagebutton = function () {
+        var params = {};
+        apiHelper.callService(apiUrl + "GetPageButton", "GET", params).then(function (data) {
+            if (!data.hasError) {
+                $scope.biaoji = 1;
+                $scope.buttons = data.data;
+            } else {
+                showMsg.error("提示", data.error);
+            }
+        });
     }
 }]);
