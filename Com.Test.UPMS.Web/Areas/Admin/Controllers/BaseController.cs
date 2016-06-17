@@ -110,7 +110,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
                             left join RoleModel T2 on T1.ModelId = T2.ModelId
                             left join UserRole T3 on T2.RoleId = T3.RoleId
                             left join UserInfo T4 on T3.UserId = T4.UserId
-                            where T4.UserName='" + name + "' and T1.IsDel=0";
+                            where T4.UserName='" + name + "' and T1.SystemId =1 and T1.IsDel=0";
             return ModelInfoRepository.GetOneAsync(sql, new ModelInfo { });
         }
     }

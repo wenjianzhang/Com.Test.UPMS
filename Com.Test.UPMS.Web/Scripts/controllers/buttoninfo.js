@@ -164,13 +164,10 @@ app.controller('buttonInfoController', ['$scope', 'apiHelper', function ($scope,
         $scope.load($scope.paginationConf.itemsPerPage, $scope.paginationConf.currentPage);
     }
 
-    $scope.biaoji = 0;
-
     $scope.loadcurrentpagebutton = function () {
         var params = {};
         apiHelper.callService(apiUrl + "GetPageButton", "GET", params).then(function (data) {
             if (!data.hasError) {
-                $scope.biaoji = 1;
                 $scope.buttons = data.data;
             } else {
                 showMsg.error("提示", data.error);

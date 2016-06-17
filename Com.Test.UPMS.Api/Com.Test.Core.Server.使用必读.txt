@@ -1,0 +1,8 @@
+﻿*************************************************
+********** --------使用前必读--------- **********
+*************************************************
+**** 请在WebApiConfig文件中添加
+*************************************************
+
+
+config.EnableCors(new EnableCorsAttribute(AppSettingHelper.CorsOrigins, AppSettingHelper.CorsHeaders, AppSettingHelper.CorsMethods));
