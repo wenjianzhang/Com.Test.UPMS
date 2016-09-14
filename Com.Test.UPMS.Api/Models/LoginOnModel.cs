@@ -15,6 +15,10 @@ namespace Com.Test.UPMS.Api.Models
         public string UserName { get; set; }
 
         [Required]
+        [Display(Name = "角色代码")]
+        public string RoleCode { get; set; }
+
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "密码")]
         public string Password { get; set; }

@@ -33,7 +33,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             try
             {
-                string sql = "select T2.* from SystemRole T1 left join RoleInfo T2 on T1.RoleId = T2.RoleId where T1.SystemId = @SystemId ";
+                string sql = "select T2.* from systemrole T1 left join roleinfo T2 on T1.RoleId = T2.RoleId where T1.SystemId = @SystemId ";
                 IEnumerable<RoleModelViewData> RoleModelList = await RoleModelRepository.GetOneAsync(sql, new RoleModelViewData { SystemId = SystemId });
                 return Json(AjaxResult.SetResult(new { list = RoleModelList }), JsonRequestBehavior.AllowGet);
             }
@@ -46,7 +46,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<JsonResult> GetModelInfo(int SystemId = 0)
         {
-            string sql = "select * from ModelInfo where IsDel=0 and SystemId= @SystemId ";
+            string sql = "select * from modelinfo where IsDel=0 and SystemId= @SystemId ";
             IEnumerable<ModelInfo> RoleModelList = await ModelInfoRepository.GetOneAsync(sql, new ModelInfo { SystemId = SystemId });
             return Json(AjaxResult.SetResult(new { list = RoleModelList }), JsonRequestBehavior.AllowGet);
         }
@@ -54,7 +54,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<JsonResult> GetModelButtonInfo(int SystemId = 0)
         {
-            string sql = "select T1.SystemId,T1.ModelId,T3.* from ModelInfo T1  left join ModelButton T2 on T1.ModelId = T2.ModelId left join ButtonInfo T3 on T2.ButtonId = T3.ButtonId where T1.SystemId = @SystemId ";
+            string sql = "select T1.SystemId,T1.ModelId,T3.* from modelinfo T1  left join modelbutton T2 on T1.ModelId = T2.ModelId left join buttoninfo T3 on T2.ButtonId = T3.ButtonId where T1.SystemId = @SystemId ";
             IEnumerable<ModelButtonViewData> ModelButtonInfoList = await ModelButtonRepository.GetOneAsync(sql, new ModelButtonViewData { SystemId = SystemId });
             return Json(AjaxResult.SetResult(new { list = ModelButtonInfoList }), JsonRequestBehavior.AllowGet);
         }
@@ -62,9 +62,9 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<JsonResult> SetModelButtonInfo(int SystemId = 0, int RoleId = 0)
         {//select T1.*,T3.* from SystemModel T1
-            string sql = "select T1.SystemId,T1.ModelId,T3.* from ModelInfo T1  left join ModelButton T2 on T1.ModelId = T2.ModelId left join ButtonInfo T3 on T2.ButtonId = T3.ButtonId where T1.SystemId = @SystemId ";
+            string sql = "select T1.SystemId,T1.ModelId,T3.* from modelinfo T1  left join modelbutton T2 on T1.ModelId = T2.ModelId left join buttoninfo T3 on T2.ButtonId = T3.ButtonId where T1.SystemId = @SystemId ";
 
-            string sql2 = "select * from RoleModel where SystemId=@SystemId and RoleId=@RoleId;";
+            string sql2 = "select * from rolemodel where SystemId=@SystemId and RoleId=@RoleId;";
             try
             {
                 IEnumerable<RoleModel> RoleModelList = await RoleModelBaseRepository.GetOneAsync(sql2, new RoleModel { SystemId = SystemId, RoleId = RoleId });
@@ -93,7 +93,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<JsonResult> UpdateRoleModel(string ModelButtonList, int RoleId, int SystemId)
         {
-            string sql = "delete from RoleModel where SystemId=@SystemId; ";
+            string sql = "delete from rolemodel where SystemId=@SystemId; ";
 
             //string insert_PModel = "select PModelId,SystemId from ModelInfo where ModeId in( 0";
             JavaScriptSerializer Serializer = new JavaScriptSerializer();
@@ -102,7 +102,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
 
             foreach (var item in ModelButton)
             {
-                sql += string.Format("insret into RoleModel(SystemId,ModelId,RoleId,ButtonId)values(@SystemId,@ModelId,'" + RoleId + "',@ButtonId);", item);
+                sql += string.Format("insret into rolemodel(SystemId,ModelId,RoleId,ButtonId)values(@SystemId,@ModelId,'" + RoleId + "',@ButtonId);", item);
             }
             //foreach (var item in ModelButton)
             //{
@@ -123,13 +123,13 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             string sql = "";
             if (Checked)
             {
-                sql = "delete from RoleModel where SystemId=@SystemId and ModelId='" + ModelId + "' and RoleId='" + RoleId + "' and ButtonId='" + ButtonId + "'; ";
+                sql = "delete from rolemodel where SystemId=@SystemId and ModelId='" + ModelId + "' and RoleId='" + RoleId + "' and ButtonId='" + ButtonId + "'; ";
 
-                sql += "insert into RoleModel(SystemId,ModelId,RoleId,ButtonId)values(@SystemId,'" + ModelId + "','" + RoleId + "','" + ButtonId + "');";
+                sql += "insert into rolemodel(SystemId,ModelId,RoleId,ButtonId)values(@SystemId,'" + ModelId + "','" + RoleId + "','" + ButtonId + "');";
             }
             else
             {
-                sql = "delete from RoleModel where SystemId=@SystemId and ModelId='" + ModelId + "' and RoleId='" + RoleId + "' and ButtonId='" + ButtonId + "'; ";
+                sql = "delete from rolemodel where SystemId=@SystemId and ModelId='" + ModelId + "' and RoleId='" + RoleId + "' and ButtonId='" + ButtonId + "'; ";
             }
 
             try

@@ -27,7 +27,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             try
             {
-                string sql = "select * from RoleInfo where 1=1 and IsDel =0 ";
+                string sql = "select * from roleinfo where 1=1 and IsDel =0 ";
                 IPagedList<RoleInfo> RoleInfoList = await RoleInfoRepository.GetListAsync(sql, pageCurrent, pageSize);
                 return Json(AjaxResult.SetResult(new { list = RoleInfoList, pageCount = RoleInfoList.PageCount, totalItemCount = RoleInfoList.TotalItemCount, pageNumber = RoleInfoList.PageNumber, aa = RoleInfoList.Count }), JsonRequestBehavior.AllowGet);
             }
@@ -47,7 +47,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             try
             {
                 RoleInfo entity = new RoleInfo { RoleId = id };
-                var result = await RoleInfoRepository.GetOneAsync("select * from RoleInfo where RoleId=@RoleId and IsDel=0", entity);
+                var result = await RoleInfoRepository.GetOneAsync("select * from roleinfo where RoleId=@RoleId and IsDel=0", entity);
                 if (result == null)
                 {
                     return Json(AjaxResult.SetError("未找到符合条件数据！", ErrorCode.ErrorCodes.获取数据失败), JsonRequestBehavior.AllowGet);
@@ -65,7 +65,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             entity.CreateDate = DateTime.Now;
             entity.UpdateDate = DateTime.Now;
-            string insertSQL = @"INSERT INTO RoleInfo (
+            string insertSQL = @"INSERT INTO roleinfo (
                                 RoleName ,
                                 RoleCode ,
                                 RoleDesc ,
@@ -96,7 +96,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             RoleInfo entity = new RoleInfo { RoleId = id, UpdateDate = DateTime.Now };
             try
             {
-                var result = await RoleInfoRepository.DeleteAsync("update RoleInfo set IsDel=1,UpdateDate=@UpdateDate where RoleId=@RoleId  and IsDel=0", entity);
+                var result = await RoleInfoRepository.DeleteAsync("update roleinfo set IsDel=1,UpdateDate=@UpdateDate where RoleId=@RoleId  and IsDel=0", entity);
                 return Json(AjaxResult.SetResult(result));
             }
             catch (Exception ex)
@@ -114,7 +114,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             entity.UpdateDate = DateTime.Now;
             try
             {
-                var result = await RoleInfoRepository.EditAsync("update RoleInfo Set RoleName=@RoleName,RoleCode=@RoleCode,RoleIcon=@RoleIcon,RoleDesc=@RoleDesc,UpdateDate=@UpdateDate,Sort=@Sort where RoleId=@RoleId and IsDel=0", entity);
+                var result = await RoleInfoRepository.EditAsync("update roleinfo Set RoleName=@RoleName,RoleCode=@RoleCode,RoleIcon=@RoleIcon,RoleDesc=@RoleDesc,UpdateDate=@UpdateDate,Sort=@Sort where RoleId=@RoleId and IsDel=0", entity);
                 return Json(AjaxResult.SetResult(result));
             }
             catch (Exception ex)

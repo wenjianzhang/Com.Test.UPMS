@@ -26,7 +26,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             try
             {
-                string sql = "select * from UserRole where 1=1 ";
+                string sql = "select * from userrole where 1=1 ";
                 IPagedList<UserRole> UserRoleList = await UserRoleRepository.GetListAsync(sql, pageCurrent, pageSize);
                 return Json(AjaxResult.SetResult(new { list = UserRoleList, pageCount = UserRoleList.PageCount, totalItemCount = UserRoleList.TotalItemCount, pageNumber = UserRoleList.PageNumber, aa = UserRoleList.Count }), JsonRequestBehavior.AllowGet);
             }
@@ -46,7 +46,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             try
             {
                 UserRole entity = new UserRole { UserId = id };
-                var result = await UserRoleRepository.GetOneAsync("select * from UserRole where UserId=@UserId ", entity);
+                var result = await UserRoleRepository.GetOneAsync("select * from userrole where UserId=@UserId ", entity);
                 if (result == null)
                 {
                     return Json(AjaxResult.SetError("未找到符合条件数据！", ErrorCode.ErrorCodes.获取数据失败), JsonRequestBehavior.AllowGet);
@@ -62,8 +62,8 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<JsonResult> Post(UserRole entity)
         {
-            string insertSQL = @"Delete from UserRole where UserId=@UserId;
-                                INSERT INTO AccessManagent.UserRole(
+            string insertSQL = @"Delete from userrole where UserId=@UserId;
+                                INSERT INTO userrole(
                                    UserId
                                   ,RoleId
 ,SystemId
@@ -92,7 +92,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             UserRole entity = new UserRole { UserId = id };
             try
             {
-                var result = await UserRoleRepository.DeleteAsync("Delete from UserRole where UserId=@UserId ", entity);
+                var result = await UserRoleRepository.DeleteAsync("Delete from userrole where UserId=@UserId ", entity);
                 return Json(AjaxResult.SetResult(result));
             }
             catch (Exception ex)
@@ -109,7 +109,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             //}
             try
             {
-                var result = await UserRoleRepository.EditAsync("update UserRole Set UserId=@UserId,RoleId=@RoleId,SystemId=@SystemId where UserId=@UserId ", entity);
+                var result = await UserRoleRepository.EditAsync("update userrole Set UserId=@UserId,RoleId=@RoleId,SystemId=@SystemId where UserId=@UserId ", entity);
                 return Json(AjaxResult.SetResult(result));
             }
             catch (Exception ex)

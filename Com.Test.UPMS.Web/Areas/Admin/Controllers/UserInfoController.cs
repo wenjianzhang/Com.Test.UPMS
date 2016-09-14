@@ -15,8 +15,8 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         private BaseRepository<UserInfoView> userInfoRepository = new BaseRepository<UserInfoView>();
         private BaseRepository<UserRole> UserRoleRepository = new BaseRepository<UserRole>();
 
-        private string insertUserRoleSQL = @"Delete from UserRole where UserId=@UserId;
-                                INSERT INTO AccessManagent.UserRole(
+        private string insertUserRoleSQL = @"Delete from userrole where UserId=@UserId;
+                                INSERT INTO userrole(
                                    UserId
                                   ,RoleId
                                 ) VALUES (
@@ -35,7 +35,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             try
             {
-                string sql = @"select * from UserInfo where 1 = 1 and IsDel = 0 ";
+                string sql = @"select * from userinfo where 1 = 1 and IsDel = 0 ";
                 IPagedList<UserInfoView> userInfoList = await userInfoRepository.GetListAsync(sql, pageCurrent, pageSize);
                 return Json(AjaxResult.SetResult(new { list = userInfoList, pageCount = userInfoList.PageCount, totalItemCount = userInfoList.TotalItemCount, pageNumber = userInfoList.PageNumber, aa = userInfoList.Count }), JsonRequestBehavior.AllowGet);
             }
@@ -55,8 +55,8 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             try
             {
                 UserInfoView entity = new UserInfoView { UserId = id };
-                var result = await userInfoRepository.GetOneAsync(@"select T1.*,T2.RoleId from UserInfo T1
-                            left join UserRole T2 on T1.UserId = T2.UserId
+                var result = await userInfoRepository.GetOneAsync(@"select T1.*,T2.RoleId from userinfo T1
+                            left join userrole T2 on T1.UserId = T2.UserId
                             where 1 = 1 and  T1.UserId=@UserId and IsDel=0", entity);
                 if (result == null)
                 {
@@ -75,7 +75,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             entity.CreateDate = DateTime.Now;
             entity.UpdateDate = DateTime.Now;
-            string insertSQL = @"INSERT INTO AccessManagent.UserInfo(
+            string insertSQL = @"INSERT INTO userinfo(
                                    UserName
                                   ,UserPassword
                                   ,Salt
@@ -118,7 +118,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             UserInfoView entity = new UserInfoView { UserId = id, UpdateDate = DateTime.Now };
             try
             {
-                var result = await userInfoRepository.DeleteAsync("update UserInfo set IsDel=1,UpdateDate=@UpdateDate where UserId=@UserId  and IsDel=0", entity);
+                var result = await userInfoRepository.DeleteAsync("update userinfo set IsDel=1,UpdateDate=@UpdateDate where UserId=@UserId  and IsDel=0", entity);
                 return Json(AjaxResult.SetResult(result));
             }
             catch (Exception ex)
@@ -136,7 +136,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             entity.UpdateDate = DateTime.Now;
             try
             {
-                var result = await userInfoRepository.EditAsync("update UserInfo Set UserName=@UserName,UserPassword=@UserPassword,UpdateDate=@UpdateDate where UserId=@UserId and IsDel=0", entity);
+                var result = await userInfoRepository.EditAsync("update userinfo Set UserName=@UserName,UserPassword=@UserPassword,UpdateDate=@UpdateDate where UserId=@UserId and IsDel=0", entity);
                 int a = await UserRoleRepository.ScalarAsync(insertUserRoleSQL, new UserRole { RoleId = entity.RoleId, UserId = entity.UserId });
                 return Json(AjaxResult.SetResult(result));
             }

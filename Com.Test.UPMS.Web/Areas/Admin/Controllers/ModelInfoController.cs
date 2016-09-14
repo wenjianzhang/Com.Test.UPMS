@@ -31,7 +31,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             try
             {
-                string sql = "select * from ModelInfo where 1=1 and IsDel =0 ";
+                string sql = "select * from modelinfo where 1=1 and IsDel =0 ";
                 //if (SystemId != 0)
                 //{
                 sql += " and SystemId=" + SystemId + " ";
@@ -58,7 +58,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<JsonResult> GetList(int pageSize = 20, int pageCurrent = 1, int SystemId = 0)
         {
-            string sql = "select * from ModelInfo where 1=1 and IsDel =0 ";
+            string sql = "select * from modelinfo where 1=1 and IsDel =0 ";
             //if (SystemId != 0)
             //{
             sql += " and SystemId=" + SystemId + " ";
@@ -77,9 +77,9 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             try
             {
                 ModelInfoViewData entity = new ModelInfoViewData { ModelId = id };
-                var result = await ModelInfoRepository.GetOneAsync("select * from ModelInfo where ModelId=@ModelId and IsDel=0", entity);
+                var result = await ModelInfoRepository.GetOneAsync("select * from modelinfo where ModelId=@ModelId and IsDel=0", entity);
 
-                var result2 = await ModelButtonRepository.GetListAsync("select ButtonId from ModelButton where ModelId='" + id + "'", 1, 1000);
+                var result2 = await ModelButtonRepository.GetListAsync("select ButtonId from modelbutton where ModelId='" + id + "'", 1, 1000);
                 ModelInfoViewData resultEntity = result.FirstOrDefault();
                 List<int> buttons = new List<int>();
                 foreach (var item in result2)
@@ -105,7 +105,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             entity.CreateDate = DateTime.Now;
             entity.UpdateDate = DateTime.Now;
-            string insertSQL = @"INSERT INTO ModelInfo (
+            string insertSQL = @"INSERT INTO modelinfo (
                                 ModelName ,
 SystemId,
                                 ModelCode ,
@@ -119,11 +119,11 @@ SystemId,
                                 Updater ,
                                 IsDel ) VALUES (@ModelName,@SystemId,@ModelCode,@ModelIcon,@PModelId,@ModelDesc,@Sort,@CreateDate,@Creater,@UpdateDate,@Updater,0);select @@IDENTITY";
 
-            string insertButtonsSQL = @"Delete from AccessManagent.ModelButton where ModelId=@ModelId;";
+            string insertButtonsSQL = @"Delete from modelbutton where ModelId=@ModelId;";
 
             foreach (var item in entity.ModelButtons)
             {
-                insertButtonsSQL += "INSERT INTO AccessManagent.ModelButton( ModelId ,ButtonId) VALUES ('" + entity.ModelId + " ','" + item + "' ); ";
+                insertButtonsSQL += "INSERT INTO modelbutton( ModelId ,ButtonId) VALUES ('" + entity.ModelId + " ','" + item + "' ); ";
             }
 
             try
@@ -149,7 +149,7 @@ SystemId,
             ModelInfoViewData entity = new ModelInfoViewData { ModelId = id, UpdateDate = DateTime.Now };
             try
             {
-                var result = await ModelInfoRepository.DeleteAsync("update ModelInfo set IsDel=1,UpdateDate=@UpdateDate where ModelId=@ModelId  and IsDel=0", entity);
+                var result = await ModelInfoRepository.DeleteAsync("update modelinfo set IsDel=1,UpdateDate=@UpdateDate where ModelId=@ModelId  and IsDel=0", entity);
                 return Json(AjaxResult.SetResult(result));
             }
             catch (Exception ex)
@@ -166,16 +166,16 @@ SystemId,
             //}
             entity.UpdateDate = DateTime.Now;
 
-            string insertButtonsSQL = @"Delete from AccessManagent.ModelButton where ModelId=@ModelId;";
+            string insertButtonsSQL = @"Delete from modelbutton where ModelId=@ModelId;";
 
             foreach (var item in entity.ModelButtons)
             {
-                insertButtonsSQL += "INSERT INTO AccessManagent.ModelButton( ModelId ,ButtonId) VALUES ('" + entity.ModelId + " ','" + item + "' ); ";
+                insertButtonsSQL += "INSERT INTO modelbutton( ModelId ,ButtonId) VALUES ('" + entity.ModelId + " ','" + item + "' ); ";
             }
 
             try
             {
-                var result = await ModelInfoRepository.EditAsync(@"update ModelInfo set
+                var result = await ModelInfoRepository.EditAsync(@"update modelinfo set
                                                                     ModelName = @ModelName,
                                                                     ModelCode = @ModelCode,
                                                                     ModelIcon = @ModelIcon,

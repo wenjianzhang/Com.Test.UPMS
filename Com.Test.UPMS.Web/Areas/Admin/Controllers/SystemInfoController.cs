@@ -28,7 +28,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             try
             {
-                string sql = "select * from SystemInfo where 1=1 and IsDel =0 ";
+                string sql = "select * from systeminfo where 1=1 and IsDel =0 ";
                 IPagedList<SystemInfoViewData> SystemInfoList = await repository.GetListAsync(sql, pageCurrent, pageSize);
                 return Json(AjaxResult.SetResult(new { list = SystemInfoList, pageCount = SystemInfoList.PageCount, totalItemCount = SystemInfoList.TotalItemCount, pageNumber = SystemInfoList.PageNumber, aa = SystemInfoList.Count }), JsonRequestBehavior.AllowGet);
             }
@@ -48,9 +48,9 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             try
             {
                 SystemInfoViewData entity = new SystemInfoViewData { SystemId = id };
-                var result = await repository.GetOneAsync("select * from SystemInfo where SystemId=@SystemId and IsDel=0", entity);
+                var result = await repository.GetOneAsync("select * from systeminfo where SystemId=@SystemId and IsDel=0", entity);
 
-                var result2 = await SystemRoleRepository.GetListAsync("select RoleId from SystemRole where SystemId='" + id + "'", 1, 1000);
+                var result2 = await SystemRoleRepository.GetListAsync("select RoleId from systemrole where SystemId='" + id + "'", 1, 1000);
                 SystemInfoViewData resultEntity = result.FirstOrDefault();
                 List<int> roles = new List<int>();
                 foreach (var item in result2)
@@ -75,7 +75,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             entity.CreateDate = DateTime.Now;
             entity.UpdateDate = DateTime.Now;
-            string insertSQL = @"INSERT INTO SystemInfo (
+            string insertSQL = @"INSERT INTO systeminfo (
                                 SystemName ,
                                 SystemCode ,
                                 SystemIcon ,
@@ -91,7 +91,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
 
             foreach (var item in entity.SystemRoles)
             {
-                insertRolesSQL += "INSERT INTO AccessManagent.SystemRole( SystemId ,RoleId) VALUES (@SystemId,'" + item + "' ); ";
+                insertRolesSQL += "INSERT INTO systemrole( SystemId ,RoleId) VALUES (@SystemId,'" + item + "' ); ";
             }
 
             try
@@ -116,7 +116,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             SystemInfoViewData entity = new SystemInfoViewData { SystemId = id, UpdateDate = DateTime.Now };
             try
             {
-                var result = await repository.DeleteAsync("update SystemInfo set IsDel=1,UpdateDate=@UpdateDate where SystemId=@SystemId  and IsDel=0", entity);
+                var result = await repository.DeleteAsync("update systeminfo set IsDel=1,UpdateDate=@UpdateDate where SystemId=@SystemId  and IsDel=0", entity);
                 return Json(AjaxResult.SetResult(result));
             }
             catch (Exception ex)
@@ -132,17 +132,17 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             //    return Json(AjaxResult.SetError("参数为空", ErrorCode.ErrorCodes.参数不能为null));
             //}
 
-            string insertRolesSQL = @"Delete from AccessManagent.SystemRole where SystemId=@SystemId;";
+            string insertRolesSQL = @"Delete from systemrole where SystemId=@SystemId;";
 
             foreach (var item in entity.SystemRoles)
             {
-                insertRolesSQL += "INSERT INTO AccessManagent.SystemRole( SystemId ,RoleId) VALUES ('" + entity.SystemId + " ','" + item + "' ); ";
+                insertRolesSQL += "INSERT INTO systemrole( SystemId ,RoleId) VALUES ('" + entity.SystemId + " ','" + item + "' ); ";
             }
 
             entity.UpdateDate = DateTime.Now;
             try
             {
-                var result = await repository.EditAsync("update SystemInfo Set SystemName=@SystemName,SystemCode=@SystemCode,SystemIcon=@SystemIcon,UpdateDate=@UpdateDate,Sort=@Sort where SystemId=@SystemId and IsDel=0", entity);
+                var result = await repository.EditAsync("update systeminfo Set SystemName=@SystemName,SystemCode=@SystemCode,SystemIcon=@SystemIcon,UpdateDate=@UpdateDate,Sort=@Sort where SystemId=@SystemId and IsDel=0", entity);
 
                 int a = await SystemRoleRepository.CreateAsync(insertRolesSQL, new SystemRole { SystemId = entity.SystemId });
 

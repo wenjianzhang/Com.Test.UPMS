@@ -12,47 +12,109 @@
     <link rel="stylesheet" href="~/assets/css/select2.css" />
     <link rel="stylesheet" href="~/assets/css/chosen.css" />
     <style>
-        td > .list { content: ""; display: block; width: 7px; position: absolute; z-index: 1; left: 20px; top: 17px; border: 1px dotted; border-width: 1px 0 0; }
-        .list { width: 400px; border-spacing: 0px; }
+        td > .list {
+            content: "";
+            display: block;
+            width: 7px;
+            position: absolute;
+            z-index: 1;
+            left: 20px;
+            top: 17px;
+            border: 1px dotted;
+            border-width: 1px 0 0;
+        }
+
+        .list {
+            width: 400px;
+            border-spacing: 0px;
+        }
 
             .list td,
-            .list th { box-sizing: border-box; }
+            .list th {
+                box-sizing: border-box;
+            }
 
-            .list th { line-height: 24px; height: 40px; font-weight: bold; border: none; background: none; border-bottom: 2px solid #5B5B5B; text-align: left; width: 200px; }
+            .list th {
+                line-height: 24px;
+                height: 40px;
+                font-weight: bold;
+                border: none;
+                background: none;
+                border-bottom: 2px solid #5B5B5B;
+                text-align: left;
+                width: 200px;
+            }
 
-            .list td { line-height: 30px; }
+            .list td {
+                line-height: 30px;
+            }
 
-        .name { padding-left: 10px; }
+        .name {
+            padding-left: 10px;
+        }
 
-        .inner { display: none; }
+        .inner {
+            display: none;
+        }
 
-            .inner.open { display: table-row; }
+            .inner.open {
+                display: table-row;
+            }
 
-        .switch, .ico { display: inline-block; width: 18px; height: 18px; background-image: url("http://www.gbtags.com/gb/networks/background/d0642682-f7aa-4c64-98c6-fbd320d52706.png"); vertical-align: text-top; }
+        .switch, .ico {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background-image: url("http://www.gbtags.com/gb/networks/background/d0642682-f7aa-4c64-98c6-fbd320d52706.png");
+            vertical-align: text-top;
+        }
 
-        .leaf .ico { background-position: -110px -31px; }
+        .leaf .ico {
+            background-position: -110px -31px;
+        }
 
-        .outer .ico { background-position: -110px 0; }
+        .outer .ico {
+            background-position: -110px 0;
+        }
 
-        .outer.open .ico { background-position: -110px -15px; }
+        .outer.open .ico {
+            background-position: -110px -15px;
+        }
 
-        .outer .switch { background-position: -74px -18px; }
+        .outer .switch {
+            background-position: -74px -18px;
+        }
 
-        .leaf .switch { background-position: -56px -18px; }
+        .leaf .switch {
+            background-position: -56px -18px;
+        }
 
-        .outer.open .switch { background-position: -92px -18px; }
+        .outer.open .switch {
+            background-position: -92px -18px;
+        }
 
-        .list .leaf:last-child .switch { background-position: -56px -36px; }
+        .list .leaf:last-child .switch {
+            background-position: -56px -36px;
+        }
 
-        #listTable > tbody > tr:first-child { background-position: -74px 0; }
+        #listTable > tbody > tr:first-child {
+            background-position: -74px 0;
+        }
 
-        .text-indent { display: inline-block; width: 16px; }
+        .text-indent {
+            display: inline-block;
+            width: 16px;
+        }
 
         .outer.open > td,
-        #listTable > tbody > tr > td { border-bottom: 1px solid #E6E6E6; }
+        #listTable > tbody > tr > td {
+            border-bottom: 1px solid #E6E6E6;
+        }
 
         tr.outer.focus,
-        tr.leaf.focus { background: #ccc; }
+        tr.leaf.focus {
+            background: #ccc;
+        }
     </style>
 }
 
@@ -163,7 +225,7 @@
                                 <td>
                                     <div class="hidden-sm hidden-xs action-Systems" @*ng-if="item.PModelId==1"*@>
 
-                                        <label class="pos-rel btn btn-minier {{itemc.ButtonClass}}" title="{{itemc.ButtonName}}" ng-repeat="itemc in dataModelButtonList | filter:{ModelId:item.ModelId}" ng-if="itemc.ButtonId>0">
+                                        <label class="pos-rel btn btn-minier {{itemc.ButtonClass}}" title="{{itemc.ButtonName}}" ng-repeat="itemc in dataModelButtonList | filter:{ModelId:item.ModelId}:true" ng-if="itemc.ButtonId>0">
                                             <input type="checkbox" class="ace checkboxitem" name="{{itemc.ModelId}}{{itemc.ButtonName}}" ng-model="itemc.Checked" ng-change="updateMB(item.SystemId,itemc.ModelId,itemc.ButtonId,itemc.Checked)" />
 
                                             <span class="lbl">&nbsp;<i class="ace-icon {{itemc.ButtonIcon}} bigger-130"></i>{{itemc.ButtonName}}</span>
@@ -172,9 +234,9 @@
 
                                     <div class="hidden-md hidden-lg">
                                         <div class="inline pos-rel">
-                                            <System class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                            <system class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
                                                 <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-                                            </System>
+                                            </system>
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>

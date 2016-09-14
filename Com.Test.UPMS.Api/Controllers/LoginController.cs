@@ -36,7 +36,10 @@ namespace Com.Test.UPMS.Api.Controllers
             //var Password = JObject.Parse(value).Value<string>("Password");
             //JObject
             //LoginOnModel
-            var obj = loginRepository.GetOne("select * from UserInfo where UserName=@UserName and UserPassword=@Password and IsDel=0;", value).FirstOrDefault();
+            var obj = loginRepository.GetOne(@"select userinfo.*,roleinfo.RoleCode from userinfo
+                                                left join userrole on userinfo.UserId = userrole.UserId
+                                                left join roleinfo on userrole.RoleId = roleinfo.RoleId
+                                                where userinfo.UserName=@UserName and userinfo.UserPassword=@Password and userinfo.IsDel=0;", value).FirstOrDefault();
 
             if (obj != null)
             {

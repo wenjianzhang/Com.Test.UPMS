@@ -30,7 +30,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         public ActionResult Login(LoginOnModel collection)
         {
             bool isPersistent = true;
-            var obj = loginRepository.GetOne("select * from UserInfo where UserName=@UserName and UserPassword=@Password and IsDel=0;", collection).FirstOrDefault();
+            var obj = loginRepository.GetOne("select * from userinfo where UserName=@UserName and UserPassword=@Password and IsDel=0;", collection).FirstOrDefault();
 
             if (obj != null)
             {

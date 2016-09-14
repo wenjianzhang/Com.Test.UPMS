@@ -35,7 +35,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<JsonResult> Get(int pageSize = 20, int pageCurrent = 1)
         {
-            string sql = "select * from ButtonInfo where 1=1 and IsDel =0 ";
+            string sql = "select * from buttoninfo where 1=1 and IsDel =0 ";
             try
             {
                 IPagedList<ButtonInfo> ButtonInfoList = await ButtonInfoRepository.GetListAsync(sql, pageCurrent, pageSize);
@@ -57,7 +57,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             try
             {
                 ButtonInfo entity = new ButtonInfo { ButtonId = id };
-                var result = await ButtonInfoRepository.GetOneAsync("select * from ButtonInfo where ButtonId=@ButtonId and IsDel=0", entity);
+                var result = await ButtonInfoRepository.GetOneAsync("select * from buttoninfo where ButtonId=@ButtonId and IsDel=0", entity);
                 if (result == null)
                 {
                     return Json(AjaxResult.SetError("未找到符合条件数据！", ErrorCode.ErrorCodes.获取数据失败), JsonRequestBehavior.AllowGet);
@@ -75,7 +75,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
         {
             entity.CreateDate = DateTime.Now;
             entity.UpdateDate = DateTime.Now;
-            string insertSQL = @"INSERT INTO ButtonInfo (
+            string insertSQL = @"INSERT INTO buttoninfo (
                                  ButtonName ,
                                  ButtonCode ,
                                  ButtonIcon ,
@@ -106,7 +106,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             ButtonInfo entity = new ButtonInfo { ButtonId = id, UpdateDate = DateTime.Now };
             try
             {
-                var result = await ButtonInfoRepository.DeleteAsync("update ButtonInfo set IsDel=1,UpdateDate=@UpdateDate where ButtonId=@ButtonId  and IsDel=0", entity);
+                var result = await ButtonInfoRepository.DeleteAsync("update buttoninfo set IsDel=1,UpdateDate=@UpdateDate where ButtonId=@ButtonId  and IsDel=0", entity);
                 return Json(AjaxResult.SetResult(result));
             }
             catch (Exception ex)
@@ -124,7 +124,7 @@ namespace Com.Test.UPMS.Web.Areas.Admin.Controllers
             entity.UpdateDate = DateTime.Now;
             try
             {
-                var result = await ButtonInfoRepository.EditAsync("update ButtonInfo Set ButtonName=@ButtonName,ButtonCode=@ButtonCode,ButtonIcon=@ButtonIcon,ButtonDesc=@ButtonDesc,UpdateDate=@UpdateDate where ButtonId=@ButtonId and IsDel=0", entity);
+                var result = await ButtonInfoRepository.EditAsync("update buttoninfo Set ButtonName=@ButtonName,ButtonCode=@ButtonCode,ButtonIcon=@ButtonIcon,ButtonDesc=@ButtonDesc,UpdateDate=@UpdateDate where ButtonId=@ButtonId and IsDel=0", entity);
                 return Json(AjaxResult.SetResult(result));
             }
             catch (Exception ex)
